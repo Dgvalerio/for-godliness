@@ -23,7 +23,9 @@
     "typescript": "5.2.2"
   },
   "devDependencies": {
-    "@dgvalerio/eslint-config": "^1.5.2"
+    "@dgvalerio/eslint-config": "^1.5.2",
+    "prettier": "^3.0.3",
+    "prettier-plugin-tailwindcss": "^0.4.1"
   },
   "packageManager": "yarn@3.6.3"
 }
