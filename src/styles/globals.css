@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .bg-background {
+    @apply bg-zinc-50;
+    @apply dark:bg-zinc-950;
+  }
+}
