@@ -103,31 +103,27 @@ export const DataSheetCreateForm: FC = () => {
             <Radio.Item name="sisters" value="sisters" label="Irmãs" />
             <Radio.Item name="deacons" value="deacons" label="Diáconos" />
           </Radio.Group>
-          <Form.Input<CreateDataSheet>
+          <Form.Input
             loading={loading}
             label="Data (reunião ou emergência)"
             name="date"
             type="date"
           />
-          <Form.Input<CreateDataSheet>
+          <Form.Input
             loading={loading}
             label="Prontuário nº"
             name="record-number"
           />
         </div>
         <div className="flex items-start gap-2">
-          <Form.Input<CreateDataSheet>
-            loading={loading}
-            label="Nome"
-            name="name"
-          />
-          <Form.Input<CreateDataSheet>
+          <Form.Input loading={loading} label="Nome" name="name" />
+          <Form.Input
             loading={loading}
             label="Idade"
             name="age"
             type="number"
           />
-          <Form.Input<CreateDataSheet>
+          <Form.Input
             loading={loading}
             label="Tempo de crente"
             name="believers-time"
@@ -148,19 +144,18 @@ export const DataSheetCreateForm: FC = () => {
           </Radio.Group>
         </div>
         <div className="flex items-start gap-2">
-          {' '}
-          <Form.Input<CreateDataSheet>
+          <Form.Input
             loading={loading}
             label="Nome do cônjuge"
             name="spouse-name"
           />
-          <Form.Input<CreateDataSheet>
+          <Form.Input
             loading={loading}
             label="Idade do cônjuge"
             name="spouse-age"
             type="number"
           />
-          <Form.Input<CreateDataSheet>
+          <Form.Input
             loading={loading}
             label="Tempo de crente do cônjuge"
             name="spouse-believers-time"
@@ -168,13 +163,13 @@ export const DataSheetCreateForm: FC = () => {
           />
         </div>
         <div className="flex items-start gap-2">
-          <Form.Input<CreateDataSheet>
+          <Form.Input
             loading={loading}
             label="Residência (rua e nº)"
             name="residence"
             type="number"
           />
-          <Form.Input<CreateDataSheet>
+          <Form.Input
             loading={loading}
             label="Congregação comum do atendido"
             name="common"
@@ -182,13 +177,13 @@ export const DataSheetCreateForm: FC = () => {
           />
         </div>
         <div className="flex items-start gap-2">
-          <Form.Input<CreateDataSheet>
+          <Form.Input
             loading={loading}
             label="Bairro"
             name="district"
             type="number"
           />
-          <Form.Input<CreateDataSheet>
+          <Form.Input
             loading={loading}
             label="Cidade"
             name="city"
@@ -196,19 +191,19 @@ export const DataSheetCreateForm: FC = () => {
           />
         </div>
         <div className="flex items-start gap-2">
-          <Form.Input<CreateDataSheet>
+          <Form.Input
             loading={loading}
             label="Quanto paga de aluguel? R$"
             name="rental-value"
             type="number"
           />
-          <Form.Input<CreateDataSheet>
+          <Form.Input
             loading={loading}
             label="Piedade atende mensal? R$"
             name="monthly-service-cost"
             type="number"
           />
-          <Form.Input<CreateDataSheet>
+          <Form.Input
             loading={loading}
             label="Quantos filhos/netos tem em casa?"
             name="dependents-count"
@@ -216,19 +211,19 @@ export const DataSheetCreateForm: FC = () => {
           />
         </div>
         <div className="flex items-start gap-2">
-          <Form.Input<CreateDataSheet>
+          <Form.Input
             loading={loading}
             label="Quanto ganha do trabalho? R$"
             name="salary"
             type="number"
           />
-          <Form.Input<CreateDataSheet>
+          <Form.Input
             loading={loading}
             label="Quanto ganham os filhos? R$"
             name="dependents-salary"
             type="number"
           />
-          <Form.Input<CreateDataSheet>
+          <Form.Input
             loading={loading}
             label="Idade dos filhos:"
             name="age-of-children"
@@ -236,19 +231,19 @@ export const DataSheetCreateForm: FC = () => {
           />
         </div>
         <div className="flex items-start gap-2">
-          <Form.Input<CreateDataSheet>
+          <Form.Input
             loading={loading}
             label="Quanto ganha da Previdência? R$"
             name="social-security"
             type="number"
           />
-          <Form.Input<CreateDataSheet>
+          <Form.Input
             loading={loading}
             label="Número de filhos que trabalham"
             name="working-children-count"
             type="number"
           />
-          <Form.Input<CreateDataSheet>
+          <Form.Input
             loading={loading}
             label="Idade dos netos:"
             name="age-of-grandchildren"
@@ -256,27 +251,23 @@ export const DataSheetCreateForm: FC = () => {
           />
         </div>
         <div className="flex items-start gap-2">
-          <Form.Textarea<CreateDataSheet>
-            loading={loading}
-            label="Histórico"
-            name="history"
-          />
+          <Form.Textarea loading={loading} label="Histórico" name="history" />
         </div>
         <div className="flex items-start gap-2">
-          <Form.Textarea<CreateDataSheet>
+          <Form.Textarea
             loading={loading}
             label="Qual a necessidade?"
             name="want"
           />
         </div>
         <div className="flex items-start gap-2">
-          <Form.Input<CreateDataSheet>
+          <Form.Input
             loading={loading}
             label="Irmãs da Piedade (nome ou assinatura)"
             name="sisters-names"
             type="text"
           />
-          <Form.Input<CreateDataSheet>
+          <Form.Input
             loading={loading}
             label="Diáconos (nome ou assinatura)"
             name="deacons-names"
@@ -284,13 +275,13 @@ export const DataSheetCreateForm: FC = () => {
           />
         </div>
         <div className="flex items-start gap-2">
-          <Form.Input<CreateDataSheet>
+          <Form.Input
             loading={loading}
             label="Valor mensal R$"
             name="monthly-value"
             type="text"
           />
-          <Form.Input<CreateDataSheet>
+          <Form.Input
             loading={loading}
             label="Valor de momento R$"
             name="current-value"
@@ -309,7 +300,7 @@ export const DataSheetCreateForm: FC = () => {
               label="não levará"
             />
           </Radio.Group>
-          <Form.Input<CreateDataSheet>
+          <Form.Input
             loading={loading}
             label="Valor da emergência R$"
             name="emergency-value"
@@ -333,14 +324,14 @@ export const DataSheetCreateForm: FC = () => {
               label="Diversos"
             />
           </Radio.Group>
-          <Form.Textarea<CreateDataSheet>
+          <Form.Textarea
             loading={loading}
             label="Aprovado em reunião - visto"
             name="approved"
           />
         </div>
         <div className="flex items-start gap-2">
-          <Form.Input<CreateDataSheet>
+          <Form.Input
             loading={loading}
             label="Valor por extenso (mensal + momento + emergência)"
             name="value-in-words"
