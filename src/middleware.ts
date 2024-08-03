@@ -8,6 +8,8 @@ const auth = withAuth({
         return true;
       }
 
+      console.log(props.req.url, ':', props.token);
+
       return !!props.token?.id;
     },
   },
