@@ -3,11 +3,11 @@ import { PropsWithChildren } from 'react';
 
 import { NextPage } from 'next';
 import { getServerSession } from 'next-auth';
-// import { redirect } from 'next/navigation';
+import { redirect } from 'next/navigation';
 
 import { ThemeToggleButton } from '@/components/theme-provider/theme-toggle-button';
 import { cn } from '@/lib/tailwind/utils';
-// import { routes } from '@/utils/constants/routes';
+import { routes } from '@/utils/constants/routes';
 
 interface PublicLayoutProps extends PropsWithChildren {}
 
@@ -15,13 +15,7 @@ const PublicLayout: NextPage<PublicLayoutProps> = async ({ children }) => {
   const session = await getServerSession();
 
   if (session && session.user) {
-    // redirect(routes.home);
-
-    return (
-      <main>
-        <pre>{JSON.stringify(session.user)}</pre>
-      </main>
-    );
+    redirect(routes.home);
   }
 
   return (
