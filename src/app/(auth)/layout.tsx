@@ -14,7 +14,9 @@ interface PublicLayoutProps extends PropsWithChildren {}
 const PublicLayout: NextPage<PublicLayoutProps> = async ({ children }) => {
   const session = await getServerSession();
 
-  if (session && session.user) redirect(routes.home);
+  if (session && session.user) {
+    redirect(routes.home);
+  }
 
   return (
     <main
