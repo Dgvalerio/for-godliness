@@ -1,65 +1,58 @@
-import { buildDate } from '@/utils/functions/build-date';
-
 import { z } from 'zod';
 
-export const dataSheetSchema = z
+// From GePeTo
+const checkCPF = (cpf: string): boolean => {
+  cpf = cpf.replace(/\D+/g, '');
+
+  if (cpf.length !== 11) return false;
+
+  // Verifica se todos os dígitos são iguais, o que é inválido
+  if (/^(\d)\1+$/.test(cpf)) {
+    return false;
+  }
+
+  // Valida os dígitos verificadores
+  let sum = 0;
+  let rest;
+
+  // Validação do primeiro dígito verificador
+  for (let i = 1; i <= 9; i++) {
+    sum += parseInt(cpf.substring(i - 1, i)) * (11 - i);
+  }
+
+  rest = (sum * 10) % 11;
+
+  if (rest === 10 || rest === 11) {
+    rest = 0;
+  }
+
+  if (rest !== parseInt(cpf.substring(9, 10))) {
+    return false;
+  }
+
+  sum = 0;
+  // Validação do segundo dígito verificador
+  for (let i = 1; i <= 10; i++) {
+    sum += parseInt(cpf.substring(i - 1, i)) * (12 - i);
+  }
+
+  rest = (sum * 10) % 11;
+
+  if (rest === 10 || rest === 11) {
+    rest = 0;
+  }
+
+  return rest === parseInt(cpf.substring(10, 11));
+};
+
+export const recordSchema = z
   .object({
-    client: z.string().min(1, 'O cliente deve ser informado.'),
-    project: z.string().min(1, 'O projeto deve ser informado.'),
-    category: z.string().min(1, 'A categoria deve ser informada.'),
-    day: z.string().min(1, 'A data deve ser informada.'),
-    startTime: z.string().min(1, 'A hora inicial deve ser informada.'),
-    endTime: z.string().min(1, 'A hora final deve ser informada.'),
-    description: z.string().min(1, 'A descrição deve ser informada.'),
+    name: z.string().min(1, 'O nome deve ser informado.'),
+    cpf: z.string().min(1, 'O cpf deve ser informado.'),
+    birthDate: z.string().min(1, 'A data de nascimento deve ser informada.'),
+    baptismDate: z.string().min(1, 'A data de batismo ser informada.'),
   })
-  .refine(
-    (data) => {
-      const now = new Date();
-
-      const current = buildDate(now, { date: data.day });
-
-      return current <= now;
-    },
-    {
-      message: 'A data não deve ser maior que a atual.',
-      path: ['day'],
-    }
-  )
-  .refine(
-    (data) => {
-      const now = new Date();
-
-      const initial = buildDate(now, { date: data.day, time: data.startTime });
-
-      return initial < now;
-    },
-    {
-      message: 'A hora inicial deve ser menor que a atual.',
-      path: ['startTime'],
-    }
-  )
-  .refine(
-    (data) => {
-      const now = new Date();
-
-      const initial = buildDate(now, { date: data.day, time: data.endTime });
-
-      return initial <= now;
-    },
-    {
-      message: 'A hora final não deve ser maior que a atual.',
-      path: ['endTime'],
-    }
-  )
-  .refine(
-    (data) => {
-      const start = Number(data.startTime.replace(':', ''));
-      const end = Number(data.endTime.replace(':', ''));
-
-      return start < end;
-    },
-    {
-      message: 'A hora final deve ser maior que a inicial.',
-      path: ['endTime'],
-    }
-  );
+  .refine((data) => checkCPF(data.cpf), {
+    message: 'Esse CPF é inválido.',
+    path: ['cpf'],
+  });

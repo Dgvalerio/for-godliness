@@ -144,6 +144,7 @@ const FormInput = <TFieldValues extends FieldValues>({
   description,
   descriptionClassName,
   containerClassName,
+  onChange,
   ...props
 }: FormProps.Input<TFieldValues>): ReactNode => {
   const {
@@ -163,7 +164,11 @@ const FormInput = <TFieldValues extends FieldValues>({
       containerClassName={containerClassName}
       error={error ? String(error?.message) : undefined}
     >
-      <Input aria-invalid={!!error} {...props} {...register(name)} />
+      <Input
+        aria-invalid={!!error}
+        {...props}
+        {...register(name, { onChange })}
+      />
     </Wrapper>
   );
 };
