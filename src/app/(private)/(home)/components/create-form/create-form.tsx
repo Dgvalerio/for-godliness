@@ -1,10 +1,13 @@
 'use client';
-import { ChangeEventHandler, FC } from 'react';
+import { ChangeEventHandler, FC, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { recordSchema } from '@/app/(private)/(home)/components/create-form/schema';
+import {
+  MaritalStatus,
+  recordSchema,
+} from '@/app/(private)/(home)/components/create-form/schema';
 import { Form } from '@/components/form/form';
 import { Button } from '@/components/ui/button';
 import { useDataSheetController } from '@/controllers/data-sheet/data-sheet.hook';
@@ -46,6 +49,10 @@ export const DataSheetCreateForm: FC = () => {
     // await create(formData);
   };
 
+  useEffect(() => {
+    console.log(form.formState.errors, form.getValues());
+  }, [form, form.formState.errors]);
+
   return (
     <Form.Root<RecordSheet>
       {...form}
@@ -80,7 +87,17 @@ export const DataSheetCreateForm: FC = () => {
         containerClassName="flex-1"
         type="date"
       />
-      <div className="mt-2 flex justify-between gap-2">
+      <Form.Combobox<RecordSheet>
+        // loading={loading}
+        label="Estado Civil"
+        name="maritalStatus"
+        containerClassName="flex-1"
+        items={Object.entries(MaritalStatus).map(([value, label]) => ({
+          value: label,
+          label,
+        }))}
+      />
+      <div className="mt-4 flex justify-between gap-2">
         <Button
           loading={loading}
           className="w-[25%]"

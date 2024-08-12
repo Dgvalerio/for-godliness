@@ -45,12 +45,22 @@ const checkCPF = (cpf: string): boolean => {
   return rest === parseInt(cpf.substring(10, 11));
 };
 
+export enum MaritalStatus {
+  'single' = 'Solteiro(a)',
+  'married' = 'Casado(a)',
+  'widowed' = 'Viúvo(a)',
+  'separated' = 'Separado(a)',
+}
+
 export const recordSchema = z
   .object({
     name: z.string().min(1, 'O nome deve ser informado.'),
     cpf: z.string().min(1, 'O cpf deve ser informado.'),
-    birthDate: z.string().min(1, 'A data de nascimento deve ser informada.'),
-    baptismDate: z.string().min(1, 'A data de batismo ser informada.'),
+    birthDate: z.string().date('Formato de data inválido.'),
+    baptismDate: z.string().date('Formato de data inválido.'),
+    maritalStatus: z.nativeEnum(MaritalStatus, {
+      required_error: 'O estado civil deve ser informado.',
+    }),
   })
   .refine((data) => checkCPF(data.cpf), {
     message: 'Esse CPF é inválido.',
