@@ -49,10 +49,6 @@ export const DataSheetCreateForm: FC = () => {
     // await create(formData);
   };
 
-  useEffect(() => {
-    console.log(form.formState.errors, form.getValues());
-  }, [form, form.formState.errors]);
-
   return (
     <Form.Root<RecordSheet>
       {...form}
@@ -88,12 +84,12 @@ export const DataSheetCreateForm: FC = () => {
         type="date"
       />
       <Form.Combobox<RecordSheet>
-        // loading={loading}
+        loading={loading}
         label="Estado Civil"
         name="maritalStatus"
         containerClassName="flex-1"
         items={Object.entries(MaritalStatus).map(([value, label]) => ({
-          value: label,
+          value,
           label,
         }))}
       />

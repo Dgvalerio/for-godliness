@@ -35,6 +35,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
+import { Skeleton } from '@/components/ui/skeleton';
 import { Textarea, TextareaProps } from '@/components/ui/textarea';
 import { cn } from '@/lib/tailwind/utils';
 
@@ -62,6 +63,7 @@ export namespace FormProps {
 
   export type Combobox<TFieldValues extends FieldValues> =
     ComumFieldProps<TFieldValues> & {
+      loading?: boolean;
       placeholder?: string;
       items: { label: string; value: string }[];
     };
@@ -237,6 +239,7 @@ export const FormCombobox = <TFieldValues extends FieldValues>({
   containerClassName,
   items,
   placeholder,
+  loading,
 }: FormProps.Combobox<TFieldValues>): ReactNode => {
   const {
     control,
@@ -249,6 +252,16 @@ export const FormCombobox = <TFieldValues extends FieldValues>({
   };
 
   const error = useMemo(() => errors[name], [errors, name]);
+
+  if (loading)
+    return (
+      <Skeleton
+        className={cn(
+          'flex h-10 w-full cursor-not-allowed rounded-md',
+          containerClassName
+        )}
+      />
+    );
 
   return (
     <Wrapper<TFieldValues>

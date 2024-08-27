@@ -1,3 +1,4 @@
+import { compareAsc } from 'date-fns';
 import { z } from 'zod';
 
 // From GePeTo
@@ -45,12 +46,19 @@ const checkCPF = (cpf: string): boolean => {
   return rest === parseInt(cpf.substring(10, 11));
 };
 
-export enum MaritalStatus {
-  'single' = 'Solteiro(a)',
-  'married' = 'Casado(a)',
-  'widowed' = 'Viúvo(a)',
-  'separated' = 'Separado(a)',
+export enum MaritalStatusValues {
+  single = 'single',
+  married = 'married',
+  widowed = 'widowed',
+  separated = 'separated',
 }
+
+export const MaritalStatus: Record<MaritalStatusValues, string> = {
+  single: 'Solteiro(a)',
+  married: 'Casado(a)',
+  widowed: 'Viúvo(a)',
+  separated: 'Separado(a)',
+};
 
 export const recordSchema = z
   .object({
@@ -58,11 +66,37 @@ export const recordSchema = z
     cpf: z.string().min(1, 'O cpf deve ser informado.'),
     birthDate: z.string().date('Formato de data inválido.'),
     baptismDate: z.string().date('Formato de data inválido.'),
-    maritalStatus: z.nativeEnum(MaritalStatus, {
+    maritalStatus: z.nativeEnum(MaritalStatusValues, {
       required_error: 'O estado civil deve ser informado.',
     }),
   })
   .refine((data) => checkCPF(data.cpf), {
     message: 'Esse CPF é inválido.',
     path: ['cpf'],
-  });
+  })
+  .refine(
+    (data) => {
+      const now = new Date().toISOString();
+
+      const time = now.split('T')[1];
+
+      return compareAsc(`${data.birthDate}T${time}`, now) < 1;
+    },
+    {
+      message: 'A data não deve ser maior que a atual.',
+      path: ['birthDate'],
+    }
+  )
+  .refine(
+    (data) => {
+      const now = new Date().toISOString();
+
+      const time = now.split('T')[1];
+
+      return compareAsc(`${data.baptismDate}T${time}`, now) < 1;
+    },
+    {
+      message: 'A data não deve ser maior que a atual.',
+      path: ['baptismDate'],
+    }
+  );
