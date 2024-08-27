@@ -3909,6 +3909,7 @@ __metadata:
     eslint-config-next: "npm:14.2.3"
     firebase: "npm:^10.12.2"
     lucide-react: "npm:^0.383.0"
+    material-symbols: "npm:^0.22.2"
     next: "npm:14.2.3"
     next-auth: "npm:^4.24.7"
     next-themes: "npm:^0.3.0"
@@ -4900,6 +4901,13 @@ __metadata:
     promise-retry: "npm:^2.0.1"
     ssri: "npm:^10.0.0"
   checksum: 10c0/df5f4dbb6d98153b751bccf4dc4cc500de85a96a9331db9805596c46aa9f99d9555983954e6c1266d9f981ae37a9e4647f42b9a4bb5466f867f4012e582c9e7e
+  languageName: node
+  linkType: hard
+
+"material-symbols@npm:^0.22.2":
+  version: 0.22.2
+  resolution: "material-symbols@npm:0.22.2"
+  checksum: 10c0/8918c58221521771943d63ee3a40bce3ff6f8b14a19f8a5326a324c678a3ba386ac13ad39e7537bc24d3e97340131e42fa9a685a5dacce019639cf4c2218a0b1
   languageName: node
   linkType: hard
 

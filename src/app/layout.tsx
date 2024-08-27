@@ -13,6 +13,7 @@ import { cn } from '@/lib/tailwind/utils';
 
 import '@/lib/firebase/config';
 import '@/styles/globals.css';
+import 'material-symbols/rounded.css';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
