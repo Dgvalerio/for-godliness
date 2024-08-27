@@ -93,6 +93,12 @@ export const DataSheetCreateForm: FC = () => {
           label,
         }))}
       />
+      <Form.Input<RecordSheet>
+        loading={loading}
+        label="Profissão"
+        name="occupation"
+        containerClassName="flex-1"
+      />
       <div className="mt-4 flex justify-between gap-2">
         <Button
           loading={loading}

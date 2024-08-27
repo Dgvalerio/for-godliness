@@ -69,6 +69,7 @@ export const recordSchema = z
     maritalStatus: z.nativeEnum(MaritalStatusValues, {
       required_error: 'O estado civil deve ser informado.',
     }),
+    occupation: z.string().min(1, 'A profissão deve ser informada.'),
   })
   .refine((data) => checkCPF(data.cpf), {
     message: 'Esse CPF é inválido.',
