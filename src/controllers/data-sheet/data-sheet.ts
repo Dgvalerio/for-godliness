@@ -1,15 +1,12 @@
 import { addDoc, collection, getDocs, query, where } from '@firebase/firestore';
 
+import { CreateRecordSheet } from '@/app/(private)/(home)/components/create-form/create-form';
 import { db } from '@/lib/firebase/config';
 
 import { toast } from 'sonner';
 
-export interface DataSheet {
+export interface DataSheet extends CreateRecordSheet {
   id: string;
-  day: string;
-  startTime: string;
-  endTime: string;
-  description: string;
   userId: string;
 }
 
@@ -23,16 +20,17 @@ export const DataSheetController: IDataSheetController = {
   collectionPath: 'data-sheet',
   async create(data: Omit<DataSheet, 'id'>): Promise<void> {
     await addDoc(collection(db, this.collectionPath), {
-      day: data.day,
-      startTime: data.startTime,
-      endTime: data.endTime,
-      description: data.description,
+      name: data.name,
+      cpf: data.cpf,
+      birthDate: data.birthDate,
+      baptismDate: data.baptismDate,
+      maritalStatus: data.maritalStatus,
+      occupation: data.occupation,
+
       userId: data.userId,
     });
 
-    toast.success(
-      `Apontamento criado para o dia "${data.day} as ${data.startTime}:${data.endTime}"`
-    );
+    toast.success(`Registro adicionado com sucesso`);
   },
   async list(userId: string): Promise<DataSheet[]> {
     const q = query(

@@ -8,7 +8,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 
 import { SessionProvider } from '@/components/session-provider/session-provider';
 import { ThemeProvider } from '@/components/theme-provider/theme-provider';
-import { Toaster } from '@/components/ui/sonner';
+import { SonnerToaster } from '@/lib/sonner/sonner';
 import { cn } from '@/lib/tailwind/utils';
 
 import '@/lib/firebase/config';
@@ -39,7 +39,7 @@ const RootLayout: NextPage<RootLayoutProps> = ({ children }) => (
         disableTransitionOnChange
       >
         <SessionProvider>{children}</SessionProvider>
-        <Toaster />
+        <SonnerToaster />
       </ThemeProvider>
       <Analytics />
       <SpeedInsights />

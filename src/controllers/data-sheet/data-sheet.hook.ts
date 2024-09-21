@@ -3,17 +3,16 @@ import { useCallback, useState } from 'react';
 
 import { useSession } from 'next-auth/react';
 
-import { RecordSheet } from '@/app/(private)/(home)/components/create-form/create-form';
+import { CreateRecordSheet } from '@/app/(private)/(home)/components/create-form/create-form';
 import {
   DataSheet,
   DataSheetController,
 } from '@/controllers/data-sheet/data-sheet';
-
-import { toast } from 'sonner';
+import { toast } from '@/lib/sonner/sonner';
 
 interface IUseDataSheetController {
   loading: boolean;
-  create(data: RecordSheet): Promise<void>;
+  create(data: CreateRecordSheet): Promise<void>;
   list(): Promise<DataSheet[]>;
 }
 
@@ -22,7 +21,7 @@ export const useDataSheetController = (): IUseDataSheetController => {
   const [loading, setLoading] = useState(false);
 
   const create: IUseDataSheetController['create'] = useCallback(
-    async (data: RecordSheet) => {
+    async (data: CreateRecordSheet) => {
       setLoading(true);
 
       if (!sessionData?.id) {

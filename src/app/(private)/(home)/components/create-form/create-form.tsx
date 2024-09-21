@@ -14,12 +14,12 @@ import { useDataSheetController } from '@/controllers/data-sheet/data-sheet.hook
 
 import { z } from 'zod';
 
-export type RecordSheet = z.infer<typeof recordSchema>;
+export type CreateRecordSheet = z.infer<typeof recordSchema>;
 
 export const DataSheetCreateForm: FC = () => {
   const { loading, create } = useDataSheetController();
 
-  const form = useForm<RecordSheet>({
+  const form = useForm<CreateRecordSheet>({
     resolver: zodResolver(recordSchema),
   });
 
@@ -44,24 +44,24 @@ export const DataSheetCreateForm: FC = () => {
     form.setValue('cpf', cpfFormat);
   };
 
-  const submitHandler: SubmitHandler<RecordSheet> = async (formData) => {
+  const submitHandler: SubmitHandler<CreateRecordSheet> = async (formData) => {
     console.log({ formData });
     // await create(formData);
   };
 
   return (
-    <Form.Root<RecordSheet>
+    <Form.Root<CreateRecordSheet>
       {...form}
       onSubmit={submitHandler}
       className="flex flex-col gap-2"
     >
-      <Form.Input<RecordSheet>
+      <Form.Input<CreateRecordSheet>
         loading={loading}
         label="Nome"
         name="name"
         containerClassName="flex-1"
       />
-      <Form.Input<RecordSheet>
+      <Form.Input<CreateRecordSheet>
         loading={loading}
         label="CPF"
         name="cpf"
@@ -69,21 +69,21 @@ export const DataSheetCreateForm: FC = () => {
         containerClassName="flex-1"
         onChange={cpfChangeHandler}
       />
-      <Form.Input<RecordSheet>
+      <Form.Input<CreateRecordSheet>
         loading={loading}
         label="Data de nascimento"
         name="birthDate"
         containerClassName="flex-1"
         type="date"
       />
-      <Form.Input<RecordSheet>
+      <Form.Input<CreateRecordSheet>
         loading={loading}
         label="Data de batismo"
         name="baptismDate"
         containerClassName="flex-1"
         type="date"
       />
-      <Form.Combobox<RecordSheet>
+      <Form.Combobox<CreateRecordSheet>
         loading={loading}
         label="Estado Civil"
         name="maritalStatus"
@@ -93,7 +93,7 @@ export const DataSheetCreateForm: FC = () => {
           label,
         }))}
       />
-      <Form.Input<RecordSheet>
+      <Form.Input<CreateRecordSheet>
         loading={loading}
         label="Profissão"
         name="occupation"

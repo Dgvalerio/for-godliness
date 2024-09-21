@@ -14,7 +14,7 @@ import {
   PasswordCheck,
   PasswordCheckProps,
 } from '@/app/(auth)/sign-in/components/password-check';
-import { GoogleIcon } from '@/components/icons/google';
+import { Icon } from '@/components/icon/icon';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { UserSession } from '@/lib/next-auth/user-session.types';
@@ -92,7 +92,7 @@ const SignInPage: NextPage = () => {
         className="gap-2"
         onClick={googleAuthHandler}
       >
-        <GoogleIcon className="h-4 dark:fill-zinc-100" />
+        <Icon icon="google" className="h-4 dark:fill-zinc-100" />
         Google
       </Button>
     </div>

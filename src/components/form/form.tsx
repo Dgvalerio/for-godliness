@@ -105,7 +105,10 @@ const FormLabel: FC<FormProps.Label> = ({
 }) =>
   children && (
     <Label
-      className={cn(error && 'text-red-500 dark:text-red-900', className)}
+      className={cn(
+        error && 'font-bold text-red-500 dark:text-red-900',
+        className
+      )}
       {...props}
     >
       {children}
@@ -178,7 +181,7 @@ const FormInput = <TFieldValues extends FieldValues>({
     formState: { errors },
   } = useFormContext<TFieldValues>();
 
-  const error = useMemo(() => errors[name], [errors, name]);
+  const error = errors[name];
 
   return (
     <Wrapper<TFieldValues>
