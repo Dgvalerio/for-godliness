@@ -82,7 +82,7 @@ const SignInPage: NextPage = () => {
         />
       )}
       <Separator className="my-3">
-        <p className="bg-background mt-[-7px] px-2 text-xs uppercase text-zinc-400">
+        <p className="mt-[-7px] bg-background px-2 text-xs uppercase text-zinc-400">
           Ou continue com
         </p>
       </Separator>

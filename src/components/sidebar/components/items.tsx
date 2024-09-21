@@ -127,7 +127,7 @@ const Item: FC<
       >
         {title}
         {label && (
-          <span className="text-muted-foreground ml-auto">{label}</span>
+          <span className="ml-auto text-muted-foreground">{label}</span>
         )}
       </TooltipContent>
     </Tooltip>

@@ -29,7 +29,7 @@ const RootLayout: NextPage<RootLayoutProps> = ({ children }) => (
     <body
       className={cn(
         inter.variable,
-        'bg-background flex h-full max-h-screen min-h-screen flex-col items-stretch justify-stretch gap-4 font-sans antialiased'
+        'flex h-full max-h-screen min-h-screen flex-col items-stretch justify-stretch gap-4 bg-background font-sans antialiased'
       )}
     >
       <ThemeProvider
