@@ -1,10 +1,12 @@
 'use client';
-import { ChangeEventHandler, FC, useEffect } from 'react';
+import { ChangeEventHandler, FC } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import {
+  HousingCondition,
+  HousingConditionValues,
   MaritalStatus,
   recordSchema,
 } from '@/app/(private)/(home)/components/create-form/schema';
@@ -17,7 +19,7 @@ import { z } from 'zod';
 export type CreateRecordSheet = z.infer<typeof recordSchema>;
 
 export const DataSheetCreateForm: FC = () => {
-  const { loading, create } = useDataSheetController();
+  const { loading } = useDataSheetController();
 
   const form = useForm<CreateRecordSheet>({
     resolver: zodResolver(recordSchema),
@@ -48,6 +50,8 @@ export const DataSheetCreateForm: FC = () => {
     console.log({ formData });
     // await create(formData);
   };
+
+  const housingCondition = form.watch('housingCondition');
 
   return (
     <Form.Root<CreateRecordSheet>
@@ -99,6 +103,34 @@ export const DataSheetCreateForm: FC = () => {
         name="occupation"
         containerClassName="flex-1"
       />
+      <Form.Combobox<CreateRecordSheet>
+        loading={loading}
+        label="Condição de moradia"
+        name="housingCondition"
+        containerClassName="flex-1"
+        items={Object.entries(HousingCondition).map(([value, label]) => ({
+          value,
+          label,
+        }))}
+      />
+      {housingCondition === HousingConditionValues.financed && (
+        <Form.Input<CreateRecordSheet>
+          loading={loading}
+          label="Parcela do Financiamento"
+          name="housingValue"
+          containerClassName="flex-1"
+          type="number"
+        />
+      )}
+      {housingCondition === HousingConditionValues.rent && (
+        <Form.Input<CreateRecordSheet>
+          loading={loading}
+          label="Valor do Aluguel"
+          name="housingValue"
+          containerClassName="flex-1"
+          type="number"
+        />
+      )}
       <div className="mt-4 flex justify-between gap-2">
         <Button
           loading={loading}

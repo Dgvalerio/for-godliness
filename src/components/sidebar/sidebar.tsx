@@ -10,8 +10,6 @@ import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/tailwind/utils';
 import { routes } from '@/utils/constants/routes';
 
-import { LogOut, LayoutDashboard } from 'lucide-react';
-
 export const SideBar: FC = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
 

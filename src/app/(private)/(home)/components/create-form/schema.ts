@@ -60,6 +60,20 @@ export const MaritalStatus: Record<MaritalStatusValues, string> = {
   separated: 'Separado(a)',
 };
 
+export enum HousingConditionValues {
+  own = 'own',
+  rent = 'rent',
+  financed = 'financed',
+  loaned = 'loaned',
+}
+
+export const HousingCondition: Record<HousingConditionValues, string> = {
+  own: 'Casa própria',
+  rent: 'Casa alugada',
+  financed: 'Casa financiada',
+  loaned: 'Casa cedida',
+};
+
 export const recordSchema = z
   .object({
     name: z.string().min(1, 'O nome deve ser informado.'),
@@ -70,6 +84,10 @@ export const recordSchema = z
       required_error: 'O estado civil deve ser informado.',
     }),
     occupation: z.string().min(1, 'A profissão deve ser informada.'),
+    housingCondition: z.nativeEnum(HousingConditionValues, {
+      required_error: 'A condição de moradia deve ser informada.',
+    }),
+    housingValue: z.coerce.number().optional(),
   })
   .refine((data) => checkCPF(data.cpf), {
     message: 'Esse CPF é inválido.',
@@ -99,5 +117,23 @@ export const recordSchema = z
     {
       message: 'A data não deve ser maior que a atual.',
       path: ['baptismDate'],
+    }
+  )
+  .refine(
+    (data) =>
+      data.housingCondition !== HousingConditionValues.rent ||
+      (data.housingValue !== undefined && data.housingValue > 0),
+    {
+      message: 'O valor do aluguel deve ser informado.',
+      path: ['housingValue'],
+    }
+  )
+  .refine(
+    (data) =>
+      data.housingCondition !== HousingConditionValues.financed ||
+      (data.housingValue !== undefined && data.housingValue > 0),
+    {
+      message: 'O valor do financiamento deve ser informado.',
+      path: ['housingValue'],
     }
   );
