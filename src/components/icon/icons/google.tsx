@@ -2,10 +2,7 @@ import { FC } from 'react';
 
 import { IconProps } from '@/components/icon/icon';
 
-export const GoogleIcon: FC<Omit<IconProps, 'icon'>> = ({
-  color = 'currentColor',
-  size = 24,
-}) => (
+export const GoogleIcon: FC<Omit<IconProps, 'icon'>> = ({ size = 24 }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     x="0px"

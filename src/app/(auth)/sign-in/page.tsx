@@ -36,8 +36,6 @@ const SignInPage: NextPage = () => {
       const auth = getAuth();
       const result = await signInWithPopup(auth, provider);
 
-      console.log(result);
-
       const user: UserSession = {
         id: result.user.uid,
         email: result.user.email || 'email@mail.com',
@@ -66,6 +64,7 @@ const SignInPage: NextPage = () => {
   const checkPasswordHandler: PasswordCheckProps['onSuccess'] = async (
     data
   ) => {
+    // eslint-disable-next-line
     console.log({ data });
   };
 

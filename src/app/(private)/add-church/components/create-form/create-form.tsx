@@ -1,5 +1,5 @@
 'use client';
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -31,10 +31,6 @@ export const ChurchCreateForm: FC = () => {
   const submitHandler: SubmitHandler<CreateChurch> = async (formData) => {
     await create(formData);
   };
-
-  useEffect(() => {
-    console.log({ errors: form.formState.errors });
-  }, [form.formState.errors]);
 
   return (
     <Form.Root<CreateChurch>
