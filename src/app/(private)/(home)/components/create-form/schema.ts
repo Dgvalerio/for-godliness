@@ -87,7 +87,7 @@ export const recordSchema = z
     housingCondition: z.nativeEnum(HousingConditionValues, {
       required_error: 'A condição de moradia deve ser informada.',
     }),
-    housingValue: z.coerce.number().optional(),
+    housingValue: z.string().optional(),
   })
   .refine((data) => checkCPF(data.cpf), {
     message: 'Esse CPF é inválido.',
@@ -122,7 +122,9 @@ export const recordSchema = z
   .refine(
     (data) =>
       data.housingCondition !== HousingConditionValues.rent ||
-      (data.housingValue !== undefined && data.housingValue > 0),
+      (data.housingValue !== undefined &&
+        data.housingValue &&
+        Number(data.housingValue.replaceAll(/\D/g, '')) > 0),
     {
       message: 'O valor do aluguel deve ser informado.',
       path: ['housingValue'],
@@ -131,7 +133,9 @@ export const recordSchema = z
   .refine(
     (data) =>
       data.housingCondition !== HousingConditionValues.financed ||
-      (data.housingValue !== undefined && data.housingValue > 0),
+      (data.housingValue !== undefined &&
+        data.housingValue &&
+        Number(data.housingValue.replaceAll(/\D/g, '')) > 0),
     {
       message: 'O valor do financiamento deve ser informado.',
       path: ['housingValue'],

@@ -18,6 +18,41 @@ import { z } from 'zod';
 
 export type CreateRecordSheet = z.infer<typeof recordSchema>;
 
+const cpfMask = (value: string): string => {
+  const justNumber = value.replaceAll(/\D/g, '');
+
+  const part1 = justNumber.slice(0, 3);
+  const part2 = justNumber.slice(3, 6);
+  const part3 = justNumber.slice(6, 9);
+  const part4 = justNumber.slice(9, 11);
+
+  let cpfFormat = '';
+
+  if (part1) cpfFormat = part1;
+  if (part2) cpfFormat += `.` + part2;
+  if (part3) cpfFormat += `.` + part3;
+  if (part4) cpfFormat += `-` + part4;
+
+  return cpfFormat;
+};
+
+const moneyMask = (value: string): string => {
+  // Remove tudo que não for dígito
+  let numericValue = value.replaceAll(/\D/g, '');
+
+  // Formata o valor para centavos
+  numericValue = (parseInt(numericValue, 10) / 100).toFixed(2);
+
+  // Adiciona separadores de milhar e ponto decimal
+  numericValue = numericValue.replace('.', ',');
+
+  // Insere separadores de milhar
+  numericValue = numericValue.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+  // Retorna com o símbolo de moeda
+  return `R$ ${numericValue}`;
+};
+
 export const DataSheetCreateForm: FC = () => {
   const { loading } = useDataSheetController();
 
@@ -28,22 +63,13 @@ export const DataSheetCreateForm: FC = () => {
   const clearHandler = (): void => form.reset();
 
   const cpfChangeHandler: ChangeEventHandler<HTMLInputElement> = (event) => {
-    const prev = event.currentTarget.value;
-    const justNumber = prev.replaceAll(/\D/g, '');
+    form.setValue('cpf', cpfMask(event.currentTarget.value));
+  };
 
-    const part1 = justNumber.slice(0, 3);
-    const part2 = justNumber.slice(3, 6);
-    const part3 = justNumber.slice(6, 9);
-    const part4 = justNumber.slice(9, 11);
-
-    let cpfFormat = '';
-
-    if (part1) cpfFormat = part1;
-    if (part2) cpfFormat += `.` + part2;
-    if (part3) cpfFormat += `.` + part3;
-    if (part4) cpfFormat += `-` + part4;
-
-    form.setValue('cpf', cpfFormat);
+  const housingValueChangeHandler: ChangeEventHandler<HTMLInputElement> = (
+    event
+  ) => {
+    form.setValue('housingValue', moneyMask(event.currentTarget.value));
   };
 
   const submitHandler: SubmitHandler<CreateRecordSheet> = async (formData) => {
@@ -129,7 +155,7 @@ export const DataSheetCreateForm: FC = () => {
           label="Valor do Aluguel"
           name="housingValue"
           containerClassName="flex-1"
-          type="number"
+          onChange={housingValueChangeHandler}
         />
       )}
       <div className="mt-4 flex justify-between gap-2">
