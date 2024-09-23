@@ -5,6 +5,7 @@ import {
   PropsWithChildren,
   ReactNode,
   useMemo,
+  useState,
 } from 'react';
 import {
   FieldValues,
@@ -250,8 +251,11 @@ export const FormCombobox = <TFieldValues extends FieldValues>({
     formState: { errors },
   } = useFormContext<TFieldValues>();
 
+  const [open, setOpen] = useState(false);
+
   const selectHandler = (value: string): void => {
     setValue(name, value as PathValue<TFieldValues, Path<TFieldValues>>);
+    setOpen(false);
   };
 
   const error = useMemo(() => errors[name], [errors, name]);
@@ -280,11 +284,12 @@ export const FormCombobox = <TFieldValues extends FieldValues>({
         control={control}
         name={name}
         render={({ field }) => (
-          <Popover>
+          <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
               <Button
                 variant="outline"
                 role="combobox"
+                aria-expanded={open}
                 className={cn(
                   'justify-between',
                   !field.value && 'text-muted-foreground'
