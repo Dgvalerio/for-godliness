@@ -1,114 +1,53 @@
 'use client';
-import {
-  ChangeEventHandler,
-  FC,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
+import { ChangeEventHandler, FC } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
+import { CommonChurchSelect } from '@/app/(private)/add-record/components/create-form/comom-church-select';
 import {
   HousingCondition,
   HousingConditionValues,
   MaritalStatus,
   recordSchema,
-} from '@/app/(private)/(home)/components/create-form/schema';
+} from '@/app/(private)/add-record/components/create-form/schema';
 import { Form } from '@/components/form/form';
 import { Button } from '@/components/ui/button';
-import { useChurchController } from '@/controllers/church/church.hook';
-import { useDataSheetController } from '@/controllers/data-sheet/data-sheet.hook';
+import {
+  IUseMemberController,
+  useMemberController,
+} from '@/controllers/member/member.hook';
+import { applyMask } from '@/utils/functions/masks';
 
 import { z } from 'zod';
 
 export type CreateRecordSheet = z.infer<typeof recordSchema>;
 
-const cpfMask = (value: string): string => {
-  const justNumber = value.replaceAll(/\D/g, '');
-
-  const part1 = justNumber.slice(0, 3);
-  const part2 = justNumber.slice(3, 6);
-  const part3 = justNumber.slice(6, 9);
-  const part4 = justNumber.slice(9, 11);
-
-  let cpfFormat = '';
-
-  if (part1) cpfFormat = part1;
-  if (part2) cpfFormat += `.` + part2;
-  if (part3) cpfFormat += `.` + part3;
-  if (part4) cpfFormat += `-` + part4;
-
-  return cpfFormat;
-};
-
-const moneyMask = (value: string): string => {
-  let numericValue = value.replaceAll(/\D/g, '');
-
-  numericValue = (parseInt(numericValue, 10) / 100).toFixed(2);
-  numericValue = numericValue.replace('.', ',');
-  numericValue = numericValue.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-
-  return `R$ ${numericValue}`;
-};
-
-const CommonChurchSelect: FC = () => {
-  const { list, loading } = useChurchController();
-
-  const [churchesItems, setChurchesItems] = useState<
-    { value: string; label: string }[]
-  >([]);
-
-  const load = useCallback(async (): Promise<void> => {
-    const churches = await list();
-
-    setChurchesItems(
-      churches.map((church) => ({
-        label: `${church.number} - ${church.name}`,
-        value: church.id,
-      }))
-    );
-  }, [list]);
-
-  useEffect(() => {
-    void load();
-  }, [load]);
-
-  return (
-    <Form.Combobox<CreateRecordSheet>
-      loading={loading}
-      label="Comum congregação"
-      name="commonChurch"
-      containerClassName="flex-1"
-      items={churchesItems}
-    />
-  );
-};
-
 export const DataSheetCreateForm: FC = () => {
-  const { loading } = useDataSheetController();
-
   const form = useForm<CreateRecordSheet>({
     resolver: zodResolver(recordSchema),
   });
 
+  const errorHandler: IUseMemberController.ErrorHandler = (props) => {
+    if (props.cpf) form.setError('cpf', { message: props.cpf });
+  };
+
+  const { loading, create } = useMemberController(errorHandler);
+
   const clearHandler = (): void => form.reset();
 
   const cpfChangeHandler: ChangeEventHandler<HTMLInputElement> = (event) => {
-    form.setValue('cpf', cpfMask(event.currentTarget.value));
+    form.setValue('cpf', applyMask.cpf(event.currentTarget.value));
   };
 
   const housingValueChangeHandler: ChangeEventHandler<HTMLInputElement> = (
     event
   ) => {
-    form.setValue('housingValue', moneyMask(event.currentTarget.value));
+    form.setValue('housingValue', applyMask.money(event.currentTarget.value));
   };
 
   const submitHandler: SubmitHandler<CreateRecordSheet> = async (formData) => {
-    // eslint-disable-next-line
-    console.log({ formData });
-    // await create(formData);
+    await create(formData);
   };
 
   const housingCondition = form.watch('housingCondition');

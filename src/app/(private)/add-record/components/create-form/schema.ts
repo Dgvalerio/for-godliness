@@ -84,7 +84,7 @@ export const recordSchema = z
       required_error: 'O estado civil deve ser informado.',
     }),
     occupation: z.string().min(1, 'A profissão deve ser informada.'),
-    commonChurch: z.string().optional(),
+    commonChurch: z.string().min(1, 'A comum congregação deve ser informada.'),
     housingCondition: z.nativeEnum(HousingConditionValues, {
       required_error: 'A condição de moradia deve ser informada.',
     }),

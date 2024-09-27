@@ -1,6 +1,6 @@
 import { NextPage } from 'next';
 
-import { DataSheetCreateForm } from '@/app/(private)/(home)/components/create-form/create-form';
+import { DataSheetCreateForm } from '@/app/(private)/add-record/components/create-form/create-form';
 import { awaiter } from '@/utils/functions/awaiter';
 
 const AddRecordPage: NextPage = async () => {
