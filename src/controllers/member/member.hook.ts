@@ -3,7 +3,7 @@ import { useCallback, useState } from 'react';
 
 import { useSession } from 'next-auth/react';
 
-import { CreateMember } from '@/app/(private)/add-member/components/create-form/create-form';
+import { CreateMember } from '@/app/(private)/member/add/components/create-form/create-form';
 import { Member, MemberController } from '@/controllers/member/member';
 import { toast } from '@/lib/sonner/sonner';
 

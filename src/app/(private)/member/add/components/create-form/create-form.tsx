@@ -4,13 +4,13 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { CommonChurchSelect } from '@/app/(private)/add-member/components/create-form/comom-church-select';
+import { CommonChurchSelect } from '@/app/(private)/member/add/components/create-form/comom-church-select';
 import {
   HousingCondition,
   HousingConditionValues,
   MaritalStatus,
   memberSchema,
-} from '@/app/(private)/add-member/components/create-form/schema';
+} from '@/app/(private)/member/add/components/create-form/schema';
 import { Form } from '@/components/form/form';
 import { Button } from '@/components/ui/button';
 import {

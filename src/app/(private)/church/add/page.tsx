@@ -1,6 +1,6 @@
 import { NextPage } from 'next';
 
-import { ChurchCreateForm } from '@/app/(private)/add-church/components/create-form/create-form';
+import { ChurchCreateForm } from '@/app/(private)/church/add/components/create-form/create-form';
 import { awaiter } from '@/utils/functions/awaiter';
 
 const AddMemberPage: NextPage = async () => {

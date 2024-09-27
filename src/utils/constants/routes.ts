@@ -8,6 +8,6 @@ interface Routes {
 export const routes: Routes = {
   home: '/',
   signIn: '/sign-in',
-  addMember: '/sign-in',
-  addChurch: '/sign-in',
+  addMember: '/member/add',
+  addChurch: '/church/add',
 };

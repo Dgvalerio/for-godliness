@@ -1,6 +1,6 @@
 import { addDoc, collection, getDocs, query, where } from '@firebase/firestore';
 
-import { CreateChurch } from '@/app/(private)/add-church/components/create-form/create-form';
+import { CreateChurch } from '@/app/(private)/church/add/components/create-form/create-form';
 import { db } from '@/lib/firebase/config';
 
 import { toast } from 'sonner';

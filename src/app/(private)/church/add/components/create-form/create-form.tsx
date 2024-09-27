@@ -4,7 +4,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { churchSchema } from '@/app/(private)/add-church/components/create-form/schema';
+import { churchSchema } from '@/app/(private)/church/add/components/create-form/schema';
 import { Form } from '@/components/form/form';
 import { Button } from '@/components/ui/button';
 import {

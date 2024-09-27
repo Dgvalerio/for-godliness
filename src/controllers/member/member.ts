@@ -1,6 +1,6 @@
 import { addDoc, collection, getDocs, query, where } from '@firebase/firestore';
 
-import { CreateMember } from '@/app/(private)/add-member/components/create-form/create-form';
+import { CreateMember } from '@/app/(private)/member/add/components/create-form/create-form';
 import { db } from '@/lib/firebase/config';
 
 import { toast } from 'sonner';

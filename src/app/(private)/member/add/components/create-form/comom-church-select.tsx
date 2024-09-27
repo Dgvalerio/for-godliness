@@ -1,7 +1,7 @@
 'use client';
 import { FC, useCallback, useEffect, useState } from 'react';
 
-import { CreateMember } from '@/app/(private)/add-member/components/create-form/create-form';
+import { CreateMember } from '@/app/(private)/member/add/components/create-form/create-form';
 import { Form } from '@/components/form/form';
 import { useChurchController } from '@/controllers/church/church.hook';
 

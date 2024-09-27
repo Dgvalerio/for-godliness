@@ -3,7 +3,7 @@ import { useCallback, useState } from 'react';
 
 import { useSession } from 'next-auth/react';
 
-import { CreateChurch } from '@/app/(private)/add-church/components/create-form/create-form';
+import { CreateChurch } from '@/app/(private)/church/add/components/create-form/create-form';
 import { Church, ChurchController } from '@/controllers/church/church';
 import { toast } from '@/lib/sonner/sonner';
 
