@@ -41,12 +41,14 @@ export const ChurchCreateForm: FC = () => {
       <Form.Input<CreateChurch>
         loading={loading}
         label="Nome"
+        placeholder="Exemplo: Sítio Palanqueta I"
         name="name"
         containerClassName="flex-1"
       />
       <Form.Input<CreateChurch>
         loading={loading}
         label="Número do relatório"
+        placeholder="Exemplo: 123"
         name="number"
         containerClassName="flex-1"
         type="number"

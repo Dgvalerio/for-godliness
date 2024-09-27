@@ -62,6 +62,7 @@ export const MemberCreateForm: FC = () => {
         loading={loading}
         label="Nome"
         name="name"
+        placeholder="Exemplo: José da Silva"
         containerClassName="flex-1"
       />
       <Form.Input<CreateMember>
@@ -101,6 +102,7 @@ export const MemberCreateForm: FC = () => {
         loading={loading}
         label="Profissão"
         name="occupation"
+        placeholder="Exemplo: Professor da rede municipal"
         containerClassName="flex-1"
       />
       <Form.Combobox<CreateMember>
