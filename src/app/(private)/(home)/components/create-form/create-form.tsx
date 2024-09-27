@@ -1,5 +1,11 @@
 'use client';
-import { ChangeEventHandler, FC } from 'react';
+import {
+  ChangeEventHandler,
+  FC,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -12,6 +18,7 @@ import {
 } from '@/app/(private)/(home)/components/create-form/schema';
 import { Form } from '@/components/form/form';
 import { Button } from '@/components/ui/button';
+import { useChurchController } from '@/controllers/church/church.hook';
 import { useDataSheetController } from '@/controllers/data-sheet/data-sheet.hook';
 
 import { z } from 'zod';
@@ -37,20 +44,46 @@ const cpfMask = (value: string): string => {
 };
 
 const moneyMask = (value: string): string => {
-  // Remove tudo que não for dígito
   let numericValue = value.replaceAll(/\D/g, '');
 
-  // Formata o valor para centavos
   numericValue = (parseInt(numericValue, 10) / 100).toFixed(2);
-
-  // Adiciona separadores de milhar e ponto decimal
   numericValue = numericValue.replace('.', ',');
-
-  // Insere separadores de milhar
   numericValue = numericValue.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 
-  // Retorna com o símbolo de moeda
   return `R$ ${numericValue}`;
+};
+
+const CommonChurchSelect: FC = () => {
+  const { list, loading } = useChurchController();
+
+  const [churchesItems, setChurchesItems] = useState<
+    { value: string; label: string }[]
+  >([]);
+
+  const load = useCallback(async (): Promise<void> => {
+    const churches = await list();
+
+    setChurchesItems(
+      churches.map((church) => ({
+        label: `${church.number} - ${church.name}`,
+        value: church.id,
+      }))
+    );
+  }, [list]);
+
+  useEffect(() => {
+    void load();
+  }, [load]);
+
+  return (
+    <Form.Combobox<CreateRecordSheet>
+      loading={loading}
+      label="Comum congregação"
+      name="commonChurch"
+      containerClassName="flex-1"
+      items={churchesItems}
+    />
+  );
 };
 
 export const DataSheetCreateForm: FC = () => {
@@ -124,6 +157,7 @@ export const DataSheetCreateForm: FC = () => {
           label,
         }))}
       />
+      <CommonChurchSelect />
       <Form.Input<CreateRecordSheet>
         loading={loading}
         label="Profissão"

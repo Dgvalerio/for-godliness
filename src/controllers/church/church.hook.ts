@@ -20,7 +20,7 @@ export namespace IUseChurchController {
 }
 
 export const useChurchController = (
-  errorHandler: IUseChurchController.ErrorHandler
+  errorHandler?: IUseChurchController.ErrorHandler
 ): IUseChurchController.Return => {
   const { data: sessionData } = useSession();
   const [loading, setLoading] = useState(false);
@@ -43,7 +43,8 @@ export const useChurchController = (
       if (churches.length > 0) {
         setLoading(false);
 
-        errorHandler({ number: 'Número do relatório já cadastrado!' });
+        errorHandler &&
+          errorHandler({ number: 'Número do relatório já cadastrado!' });
 
         return void toast.error('Número do relatório já cadastrado!');
       }
