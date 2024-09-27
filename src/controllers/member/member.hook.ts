@@ -43,8 +43,7 @@ export const useMemberController = (
       if (members.length > 0) {
         setLoading(false);
 
-        errorHandler &&
-          errorHandler({ cpf: 'Número do relatório já cadastrado!' });
+        errorHandler && errorHandler({ cpf: 'Número de CPF já cadastrado!' });
 
         return void toast.error('Número do relatório já cadastrado!');
       }
