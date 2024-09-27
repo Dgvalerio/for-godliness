@@ -1418,6 +1418,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@radix-ui/react-icons@npm:^1.3.0":
+  version: 1.3.0
+  resolution: "@radix-ui/react-icons@npm:1.3.0"
+  peerDependencies:
+    react: ^16.x || ^17.x || ^18.x
+  checksum: 10c0/581657680e43fd13ff06e01f963e3afa94671d4ce6c3fb126e2c70c993ab8650faa55286974032dbccfecca4db57308fb66d53771d765887e03600cddee84ae5
+  languageName: node
+  linkType: hard
+
 "@radix-ui/react-id@npm:1.0.1":
   version: 1.0.1
   resolution: "@radix-ui/react-id@npm:1.0.1"
@@ -1880,6 +1889,36 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@radix-ui/react-tooltip@npm:^1.1.2":
+  version: 1.1.2
+  resolution: "@radix-ui/react-tooltip@npm:1.1.2"
+  dependencies:
+    "@radix-ui/primitive": "npm:1.1.0"
+    "@radix-ui/react-compose-refs": "npm:1.1.0"
+    "@radix-ui/react-context": "npm:1.1.0"
+    "@radix-ui/react-dismissable-layer": "npm:1.1.0"
+    "@radix-ui/react-id": "npm:1.1.0"
+    "@radix-ui/react-popper": "npm:1.2.0"
+    "@radix-ui/react-portal": "npm:1.1.1"
+    "@radix-ui/react-presence": "npm:1.1.0"
+    "@radix-ui/react-primitive": "npm:2.0.0"
+    "@radix-ui/react-slot": "npm:1.1.0"
+    "@radix-ui/react-use-controllable-state": "npm:1.1.0"
+    "@radix-ui/react-visually-hidden": "npm:1.1.0"
+  peerDependencies:
+    "@types/react": "*"
+    "@types/react-dom": "*"
+    react: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
+    react-dom: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+    "@types/react-dom":
+      optional: true
+  checksum: 10c0/76f3abcd27f7f673612631abc340a17e6ab0e5d20b901fe4828400de05d4d8a8711392417b028be86a3053a0881b80d0ed41c4e027eb64c1af9fe74db70d3786
+  languageName: node
+  linkType: hard
+
 "@radix-ui/react-use-callback-ref@npm:1.0.1":
   version: 1.0.1
   resolution: "@radix-ui/react-use-callback-ref@npm:1.0.1"
@@ -2090,6 +2129,25 @@ __metadata:
     "@types/react-dom":
       optional: true
   checksum: 10c0/0cbc12c2156b3fa0e40090cafd8525ce84c16a6b5a038a8e8fc7cbb16ed6da9ab369593962c57a18c41a16ec8713e0195c68ea34072ef1ca254ed4d4c0770bb4
+  languageName: node
+  linkType: hard
+
+"@radix-ui/react-visually-hidden@npm:1.1.0":
+  version: 1.1.0
+  resolution: "@radix-ui/react-visually-hidden@npm:1.1.0"
+  dependencies:
+    "@radix-ui/react-primitive": "npm:2.0.0"
+  peerDependencies:
+    "@types/react": "*"
+    "@types/react-dom": "*"
+    react: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
+    react-dom: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+    "@types/react-dom":
+      optional: true
+  checksum: 10c0/db138dd5f3c94958a9f836740d4408c89c4a73e770eaba5ead921e69b3c0d196c5cd58323d82829a9bc05a74873c299195dfd8366b9808e53a9a3dbca5a1e5fe
   languageName: node
   linkType: hard
 
@@ -2949,7 +3007,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cmdk@npm:^1.0.0":
+"cmdk@npm:1.0.0":
   version: 1.0.0
   resolution: "cmdk@npm:1.0.0"
   dependencies:
@@ -3889,12 +3947,14 @@ __metadata:
     "@radix-ui/react-avatar": "npm:^1.1.0"
     "@radix-ui/react-dialog": "npm:^1.1.1"
     "@radix-ui/react-dropdown-menu": "npm:^2.0.6"
+    "@radix-ui/react-icons": "npm:^1.3.0"
     "@radix-ui/react-label": "npm:^2.1.0"
     "@radix-ui/react-popover": "npm:^1.1.1"
     "@radix-ui/react-radio-group": "npm:^1.2.0"
     "@radix-ui/react-separator": "npm:^1.0.3"
     "@radix-ui/react-slot": "npm:^1.1.0"
     "@radix-ui/react-toast": "npm:^1.1.5"
+    "@radix-ui/react-tooltip": "npm:^1.1.2"
     "@t3-oss/env-nextjs": "npm:^0.10.1"
     "@types/node": "npm:^20"
     "@types/react": "npm:^18"
@@ -3903,12 +3963,13 @@ __metadata:
     "@vercel/speed-insights": "npm:^1.0.12"
     class-variance-authority: "npm:^0.7.0"
     clsx: "npm:^2.1.1"
-    cmdk: "npm:^1.0.0"
+    cmdk: "npm:1.0.0"
     date-fns: "npm:^3.6.0"
     eslint: "npm:^8"
     eslint-config-next: "npm:14.2.3"
     firebase: "npm:^10.12.2"
     lucide-react: "npm:^0.383.0"
+    material-symbols: "npm:^0.22.2"
     next: "npm:14.2.3"
     next-auth: "npm:^4.24.7"
     next-themes: "npm:^0.3.0"
@@ -3918,6 +3979,7 @@ __metadata:
     react: "npm:^18"
     react-dom: "npm:^18"
     react-hook-form: "npm:^7.52.1"
+    react-resizable-panels: "npm:^2.1.3"
     sonner: "npm:^1.4.41"
     tailwind-merge: "npm:^2.3.0"
     tailwindcss: "npm:^3.4.1"
@@ -4903,6 +4965,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"material-symbols@npm:^0.22.2":
+  version: 0.22.2
+  resolution: "material-symbols@npm:0.22.2"
+  checksum: 10c0/8918c58221521771943d63ee3a40bce3ff6f8b14a19f8a5326a324c678a3ba386ac13ad39e7537bc24d3e97340131e42fa9a685a5dacce019639cf4c2218a0b1
+  languageName: node
+  linkType: hard
+
 "merge2@npm:^1.3.0, merge2@npm:^1.4.1":
   version: 1.4.1
   resolution: "merge2@npm:1.4.1"
@@ -5848,6 +5917,16 @@ __metadata:
     "@types/react":
       optional: true
   checksum: 10c0/dcd523ada602bd0a839c2032cadf0b3e4af55ee85acefee3760976a9cceaa4606927801b093bbb8bf3c2989c71e048f5428c2c6eb9e6681762e86356833d039b
+  languageName: node
+  linkType: hard
+
+"react-resizable-panels@npm:^2.1.3":
+  version: 2.1.3
+  resolution: "react-resizable-panels@npm:2.1.3"
+  peerDependencies:
+    react: ^16.14.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.14.0 || ^17.0.0 || ^18.0.0
+  checksum: 10c0/65257545a935f8bd664b234659bb72535f37ba3ff2a1f09e4063315a8a4651604a6dc3da73b80895d6f15f2c52f9ca5c3e0affa3e1db7aa77b8b430df221bc68
   languageName: node
   linkType: hard
 

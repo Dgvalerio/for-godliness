@@ -8,11 +8,12 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 
 import { SessionProvider } from '@/components/session-provider/session-provider';
 import { ThemeProvider } from '@/components/theme-provider/theme-provider';
-import { Toaster } from '@/components/ui/sonner';
+import { SonnerToaster } from '@/lib/sonner/sonner';
 import { cn } from '@/lib/tailwind/utils';
 
 import '@/lib/firebase/config';
 import '@/styles/globals.css';
+import 'material-symbols/rounded.css';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -28,7 +29,7 @@ const RootLayout: NextPage<RootLayoutProps> = ({ children }) => (
     <body
       className={cn(
         inter.variable,
-        'bg-background flex min-h-screen flex-col gap-4 font-sans antialiased'
+        'flex h-full max-h-screen min-h-screen flex-col items-stretch justify-stretch gap-4 bg-background font-sans antialiased'
       )}
     >
       <ThemeProvider
@@ -38,7 +39,7 @@ const RootLayout: NextPage<RootLayoutProps> = ({ children }) => (
         disableTransitionOnChange
       >
         <SessionProvider>{children}</SessionProvider>
-        <Toaster />
+        <SonnerToaster />
       </ThemeProvider>
       <Analytics />
       <SpeedInsights />

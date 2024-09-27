@@ -14,7 +14,7 @@ import {
   PasswordCheck,
   PasswordCheckProps,
 } from '@/app/(auth)/sign-in/components/password-check';
-import { GoogleIcon } from '@/components/icons/google';
+import { Icon } from '@/components/icon/icon';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { UserSession } from '@/lib/next-auth/user-session.types';
@@ -35,8 +35,6 @@ const SignInPage: NextPage = () => {
     try {
       const auth = getAuth();
       const result = await signInWithPopup(auth, provider);
-
-      console.log(result);
 
       const user: UserSession = {
         id: result.user.uid,
@@ -66,6 +64,7 @@ const SignInPage: NextPage = () => {
   const checkPasswordHandler: PasswordCheckProps['onSuccess'] = async (
     data
   ) => {
+    // eslint-disable-next-line
     console.log({ data });
   };
 
@@ -82,7 +81,7 @@ const SignInPage: NextPage = () => {
         />
       )}
       <Separator className="my-3">
-        <p className="bg-background mt-[-7px] px-2 text-xs uppercase text-zinc-400">
+        <p className="mt-[-7px] bg-background px-2 text-xs uppercase text-zinc-400">
           Ou continue com
         </p>
       </Separator>
@@ -92,7 +91,7 @@ const SignInPage: NextPage = () => {
         className="gap-2"
         onClick={googleAuthHandler}
       >
-        <GoogleIcon className="h-4 dark:fill-zinc-100" />
+        <Icon icon="google" className="h-4 dark:fill-zinc-100" />
         Google
       </Button>
     </div>
