@@ -1,6 +1,6 @@
 import { NextPage } from 'next';
 
-import { ChurchCreateForm } from '@/app/(private)/add-church/components/create-form/create-form';
+import { MemberCreateForm } from '@/app/(private)/add-member/components/create-form/create-form';
 import { awaiter } from '@/utils/functions/awaiter';
 
 const AddMemberPage: NextPage = async () => {
@@ -8,8 +8,8 @@ const AddMemberPage: NextPage = async () => {
 
   return (
     <main className="flex flex-col gap-4">
-      <h1 className="text-center text-lg font-semibold">Adicionar Igreja</h1>
-      <ChurchCreateForm />
+      <h1 className="text-center text-lg font-semibold">Adicionar membro</h1>
+      <MemberCreateForm />
     </main>
   );
 };

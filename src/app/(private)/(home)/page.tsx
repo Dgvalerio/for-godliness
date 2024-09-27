@@ -5,6 +5,7 @@ import Link from 'next/link';
 
 import { Icon, IconProps } from '@/components/icon/icon';
 import { Button } from '@/components/ui/button';
+import { routes } from '@/utils/constants/routes';
 import { awaiter } from '@/utils/functions/awaiter';
 
 import type { UrlObject } from 'url';
@@ -33,10 +34,14 @@ const HomePage: NextPage = async () => {
     <main className="flex flex-col gap-4">
       <h1 className="text-lg font-semibold">Bem vindo ao sistema!</h1>
       <div className="flex flex-wrap gap-4">
-        <Item icon="person_add" link="/add-record" title="Adicionar registro" />
+        <Item
+          icon="person_add"
+          link={routes.addMember}
+          title="Adicionar membro"
+        />
         <Item
           icon="add_home_work"
-          link="/add-church"
+          link={routes.addChurch}
           title="Adicionar igreja"
         />
       </div>

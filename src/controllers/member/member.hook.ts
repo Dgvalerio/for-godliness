@@ -3,18 +3,18 @@ import { useCallback, useState } from 'react';
 
 import { useSession } from 'next-auth/react';
 
-import { CreateRecordSheet } from '@/app/(private)/add-record/components/create-form/create-form';
+import { CreateMember } from '@/app/(private)/add-member/components/create-form/create-form';
 import { Member, MemberController } from '@/controllers/member/member';
 import { toast } from '@/lib/sonner/sonner';
 
 export namespace IUseMemberController {
   export type ErrorHandler = (
-    props: Partial<Record<keyof CreateRecordSheet, string>>
+    props: Partial<Record<keyof CreateMember, string>>
   ) => void;
 
   export interface Return {
     loading: boolean;
-    create(data: CreateRecordSheet): Promise<void>;
+    create(data: CreateMember): Promise<void>;
     list(): Promise<Member[]>;
   }
 }
@@ -26,7 +26,7 @@ export const useMemberController = (
   const [loading, setLoading] = useState(false);
 
   const create: IUseMemberController.Return['create'] = useCallback(
-    async (data: CreateRecordSheet) => {
+    async (data: CreateMember) => {
       setLoading(true);
 
       if (!sessionData?.id) {

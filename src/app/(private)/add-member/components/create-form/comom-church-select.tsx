@@ -1,7 +1,7 @@
 'use client';
 import { FC, useCallback, useEffect, useState } from 'react';
 
-import { CreateRecordSheet } from '@/app/(private)/add-record/components/create-form/create-form';
+import { CreateMember } from '@/app/(private)/add-member/components/create-form/create-form';
 import { Form } from '@/components/form/form';
 import { useChurchController } from '@/controllers/church/church.hook';
 
@@ -28,7 +28,7 @@ export const CommonChurchSelect: FC = () => {
   }, [load]);
 
   return (
-    <Form.Combobox<CreateRecordSheet>
+    <Form.Combobox<CreateMember>
       loading={loading}
       label="Comum congregação"
       name="commonChurch"

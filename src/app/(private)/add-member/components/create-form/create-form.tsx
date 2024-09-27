@@ -4,13 +4,13 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { CommonChurchSelect } from '@/app/(private)/add-record/components/create-form/comom-church-select';
+import { CommonChurchSelect } from '@/app/(private)/add-member/components/create-form/comom-church-select';
 import {
   HousingCondition,
   HousingConditionValues,
   MaritalStatus,
-  recordSchema,
-} from '@/app/(private)/add-record/components/create-form/schema';
+  memberSchema,
+} from '@/app/(private)/add-member/components/create-form/schema';
 import { Form } from '@/components/form/form';
 import { Button } from '@/components/ui/button';
 import {
@@ -21,11 +21,11 @@ import { applyMask } from '@/utils/functions/masks';
 
 import { z } from 'zod';
 
-export type CreateRecordSheet = z.infer<typeof recordSchema>;
+export type CreateMember = z.infer<typeof memberSchema>;
 
-export const DataSheetCreateForm: FC = () => {
-  const form = useForm<CreateRecordSheet>({
-    resolver: zodResolver(recordSchema),
+export const MemberCreateForm: FC = () => {
+  const form = useForm<CreateMember>({
+    resolver: zodResolver(memberSchema),
   });
 
   const errorHandler: IUseMemberController.ErrorHandler = (props) => {
@@ -46,25 +46,25 @@ export const DataSheetCreateForm: FC = () => {
     form.setValue('housingValue', applyMask.money(event.currentTarget.value));
   };
 
-  const submitHandler: SubmitHandler<CreateRecordSheet> = async (formData) => {
+  const submitHandler: SubmitHandler<CreateMember> = async (formData) => {
     await create(formData);
   };
 
   const housingCondition = form.watch('housingCondition');
 
   return (
-    <Form.Root<CreateRecordSheet>
+    <Form.Root<CreateMember>
       {...form}
       onSubmit={submitHandler}
       className="flex flex-col gap-2"
     >
-      <Form.Input<CreateRecordSheet>
+      <Form.Input<CreateMember>
         loading={loading}
         label="Nome"
         name="name"
         containerClassName="flex-1"
       />
-      <Form.Input<CreateRecordSheet>
+      <Form.Input<CreateMember>
         loading={loading}
         label="CPF"
         name="cpf"
@@ -72,21 +72,21 @@ export const DataSheetCreateForm: FC = () => {
         containerClassName="flex-1"
         onChange={cpfChangeHandler}
       />
-      <Form.Input<CreateRecordSheet>
+      <Form.Input<CreateMember>
         loading={loading}
         label="Data de nascimento"
         name="birthDate"
         containerClassName="flex-1"
         type="date"
       />
-      <Form.Input<CreateRecordSheet>
+      <Form.Input<CreateMember>
         loading={loading}
         label="Data de batismo"
         name="baptismDate"
         containerClassName="flex-1"
         type="date"
       />
-      <Form.Combobox<CreateRecordSheet>
+      <Form.Combobox<CreateMember>
         loading={loading}
         label="Estado Civil"
         name="maritalStatus"
@@ -97,13 +97,13 @@ export const DataSheetCreateForm: FC = () => {
         }))}
       />
       <CommonChurchSelect />
-      <Form.Input<CreateRecordSheet>
+      <Form.Input<CreateMember>
         loading={loading}
         label="Profissão"
         name="occupation"
         containerClassName="flex-1"
       />
-      <Form.Combobox<CreateRecordSheet>
+      <Form.Combobox<CreateMember>
         loading={loading}
         label="Condição de moradia"
         name="housingCondition"
@@ -114,7 +114,7 @@ export const DataSheetCreateForm: FC = () => {
         }))}
       />
       {housingCondition === HousingConditionValues.financed && (
-        <Form.Input<CreateRecordSheet>
+        <Form.Input<CreateMember>
           loading={loading}
           label="Parcela do Financiamento"
           name="housingValue"
@@ -123,7 +123,7 @@ export const DataSheetCreateForm: FC = () => {
         />
       )}
       {housingCondition === HousingConditionValues.rent && (
-        <Form.Input<CreateRecordSheet>
+        <Form.Input<CreateMember>
           loading={loading}
           label="Valor do Aluguel"
           name="housingValue"

@@ -74,7 +74,7 @@ export const HousingCondition: Record<HousingConditionValues, string> = {
   loaned: 'Casa cedida',
 };
 
-export const recordSchema = z
+export const memberSchema = z
   .object({
     name: z.string().min(1, 'O nome deve ser informado.'),
     cpf: z.string().min(1, 'O cpf deve ser informado.'),

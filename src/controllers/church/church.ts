@@ -37,18 +37,18 @@ export const ChurchController: IChurchController = {
       where('userId', '==', userId)
     );
 
-    const dataSheets: Church[] = [];
+    const churches: Church[] = [];
 
     const querySnapshot = await getDocs(q);
 
     querySnapshot.forEach((doc) => {
-      dataSheets.push({
+      churches.push({
         id: doc.id,
         ...(doc.data() as Omit<Church, 'id'>),
       });
     });
 
-    return dataSheets;
+    return churches;
   },
   async find(props, userId: string): Promise<Church[]> {
     const constraints = [where('userId', '==', userId)];
@@ -57,17 +57,17 @@ export const ChurchController: IChurchController = {
 
     const q = query(collection(db, this.collectionPath), ...constraints);
 
-    const dataSheets: Church[] = [];
+    const churches: Church[] = [];
 
     const querySnapshot = await getDocs(q);
 
     querySnapshot.forEach((doc) => {
-      dataSheets.push({
+      churches.push({
         id: doc.id,
         ...(doc.data() as Omit<Church, 'id'>),
       });
     });
 
-    return dataSheets;
+    return churches;
   },
 };

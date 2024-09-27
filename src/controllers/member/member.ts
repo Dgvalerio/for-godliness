@@ -1,11 +1,11 @@
 import { addDoc, collection, getDocs, query, where } from '@firebase/firestore';
 
-import { CreateRecordSheet } from '@/app/(private)/add-record/components/create-form/create-form';
+import { CreateMember } from '@/app/(private)/add-member/components/create-form/create-form';
 import { db } from '@/lib/firebase/config';
 
 import { toast } from 'sonner';
 
-export interface Member extends CreateRecordSheet {
+export interface Member extends CreateMember {
   id: string;
   userId: string;
 }
@@ -15,7 +15,7 @@ interface IMemberController {
   create(data: Omit<Member, 'id'>): Promise<void>;
   list(userId: string): Promise<Member[]>;
   find(
-    props: Partial<Pick<CreateRecordSheet, 'cpf'>>,
+    props: Partial<Pick<CreateMember, 'cpf'>>,
     userId: string
   ): Promise<Member[]>;
 }
@@ -44,18 +44,18 @@ export const MemberController: IMemberController = {
       where('userId', '==', userId)
     );
 
-    const dataSheets: Member[] = [];
+    const members: Member[] = [];
 
     const querySnapshot = await getDocs(q);
 
     querySnapshot.forEach((doc) => {
-      dataSheets.push({
+      members.push({
         id: doc.id,
         ...(doc.data() as Omit<Member, 'id'>),
       });
     });
 
-    return dataSheets;
+    return members;
   },
   async find(props, userId: string): Promise<Member[]> {
     const constraints = [where('userId', '==', userId)];
@@ -64,14 +64,14 @@ export const MemberController: IMemberController = {
 
     const q = query(collection(db, this.collectionPath), ...constraints);
 
-    const dataSheets: Member[] = [];
+    const members: Member[] = [];
 
     const querySnapshot = await getDocs(q);
 
     querySnapshot.forEach((doc) => {
-      dataSheets.push({ id: doc.id, ...(doc.data() as Omit<Member, 'id'>) });
+      members.push({ id: doc.id, ...(doc.data() as Omit<Member, 'id'>) });
     });
 
-    return dataSheets;
+    return members;
   },
 };
