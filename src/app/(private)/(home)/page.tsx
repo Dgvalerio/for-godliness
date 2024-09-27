@@ -35,6 +35,11 @@ const HomePage: NextPage = async () => {
       <h1 className="text-lg font-semibold">Bem vindo ao sistema!</h1>
       <div className="flex flex-wrap gap-4">
         <Item
+          icon="add_notes"
+          link={routes.addPresentationForm}
+          title="Adicionar ficha de apresentação"
+        />
+        <Item
           icon="person_add"
           link={routes.addMember}
           title="Adicionar membro"

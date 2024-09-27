@@ -47,6 +47,11 @@ export const SideBar: FC = () => {
         links={[
           { title: 'Dashboard', icon: 'dashboard', link: routes.home },
           {
+            title: 'Adicionar ficha de apresentação',
+            icon: 'add_notes',
+            link: routes.addPresentationForm,
+          },
+          {
             title: 'Adicionar membro',
             icon: 'person_add',
             link: routes.addMember,

@@ -3,6 +3,7 @@ interface Routes {
   signIn: string;
   addMember: string;
   addChurch: string;
+  addPresentationForm: string;
 }
 
 export const routes: Routes = {
@@ -10,4 +11,5 @@ export const routes: Routes = {
   signIn: '/sign-in',
   addMember: '/member/add',
   addChurch: '/church/add',
+  addPresentationForm: '/presentation-form/add',
 };
