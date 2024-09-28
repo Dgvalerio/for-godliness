@@ -1,37 +1,37 @@
-// / <reference types="cypress" />
-// ***********************************************
-// This example commands.ts shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-//
-// declare global {
-//   namespace Cypress {
-//     interface Chainable {
-//       login(email: string, password: string): Chainable<void>
-//       drag(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       dismiss(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       visit(originalFn: CommandOriginalFn, url: string, options: Partial<VisitOptions>): Chainable<Element>
-//     }
-//   }
-// }
+/// <reference types="cypress" />
+
+Cypress.Commands.add(
+  'getBySel',
+  (selector, ...args) =>
+    cy.get(
+      `[data-test=${selector}]`,
+      ...args
+    ) as unknown as void | Cypress.Chainable<unknown>
+);
+
+Cypress.Commands.add(
+  'getBySelLike',
+  (selector, ...args) =>
+    cy.get(
+      `[data-test*=${selector}]`,
+      ...args
+    ) as unknown as void | Cypress.Chainable<unknown>
+);
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      getBySel<S = string>(
+        alias: string,
+        options?: Partial<Loggable & Timeoutable & Withinable & Shadow>
+      ): Chainable<S>;
+
+      getBySelLike<S = string>(
+        alias: string,
+        options?: Partial<Loggable & Timeoutable & Withinable & Shadow>
+      ): Chainable<S>;
+    }
+  }
+}
+
+export const commands = 'commands';
