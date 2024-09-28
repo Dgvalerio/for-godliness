@@ -6,7 +6,7 @@
   "overrides": [
     {
       "files": [
-        "**/*.cy.**"
+        "cypress/**/*.**"
       ],
       "rules": {
         "spaced-comment": "off"
