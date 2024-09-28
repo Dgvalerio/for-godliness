@@ -49,6 +49,7 @@
   },
   "devDependencies": {
     "@dgvalerio/eslint-config": "^1.5.9",
+    "@faker-js/faker": "^9.0.3",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
