@@ -19,6 +19,7 @@
     "@radix-ui/react-radio-group": "^1.2.0",
     "@radix-ui/react-separator": "^1.0.3",
     "@radix-ui/react-slot": "^1.1.0",
+    "@radix-ui/react-switch": "^1.1.0",
     "@radix-ui/react-toast": "^1.1.5",
     "@radix-ui/react-tooltip": "^1.1.2",
     "@t3-oss/env-nextjs": "^0.10.1",
