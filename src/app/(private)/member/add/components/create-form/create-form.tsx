@@ -1,6 +1,6 @@
 'use client';
-import { ChangeEventHandler, FC } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { ChangeEventHandler, FC, useEffect } from 'react';
+import { SubmitHandler, useForm, useFormContext } from 'react-hook-form';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -10,9 +10,18 @@ import {
   HousingConditionValues,
   MaritalStatus,
   memberSchema,
-} from '@/app/(private)/member/add/components/create-form/schema';
+} from '@/app/(private)/member/add/components/create-form/schemas/member.schema';
+import { Ministry } from '@/app/(private)/member/add/components/create-form/schemas/ministry.schema';
 import { Form } from '@/components/form/form';
 import { Button } from '@/components/ui/button';
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+} from '@/components/ui/form';
+import { Separator } from '@/components/ui/separator';
+import { Switch } from '@/components/ui/switch';
 import {
   IUseMemberController,
   useMemberController,
@@ -22,6 +31,70 @@ import { applyMask } from '@/utils/functions/masks';
 import { z } from 'zod';
 
 export type CreateMember = z.infer<typeof memberSchema>;
+
+export type InputOnChange = ChangeEventHandler<HTMLInputElement>;
+
+const MinistryInput: FC<{ loading: boolean }> = ({ loading }) => {
+  const { watch, control, setValue } = useFormContext<CreateMember>();
+
+  const handleCheckedChange = (
+    onChange: (checked: boolean) => void,
+    checked: boolean
+  ): void => {
+    if (!checked) {
+      setValue('ministry', undefined);
+      setValue('ministryPresentation', undefined);
+    }
+
+    onChange(checked);
+  };
+
+  const hasMinistry = watch('hasMinistry');
+
+  return (
+    <div className="flex flex-col gap-2 rounded-lg border p-3 shadow-sm">
+      <FormField
+        control={control}
+        name="hasMinistry"
+        render={({ field }) => (
+          <FormItem className="flex flex-row items-center justify-between">
+            <div className="space-y-0.5">
+              <FormLabel>Tem ministério?</FormLabel>
+            </div>
+            <FormControl>
+              <Switch
+                checked={field.value}
+                onCheckedChange={handleCheckedChange.bind(null, field.onChange)}
+              />
+            </FormControl>
+          </FormItem>
+        )}
+      />
+      {hasMinistry && (
+        <>
+          <Separator className="my-2" />
+          <Form.Combobox<CreateMember>
+            loading={loading}
+            label="Ministério"
+            name="ministry"
+            containerClassName="flex-1"
+            items={Object.entries(Ministry).map(([value, label]) => ({
+              value,
+              label,
+            }))}
+          />
+          <Form.Input<CreateMember>
+            loading={loading}
+            label="Data de apresentação"
+            name="ministryPresentation"
+            containerClassName="flex-1"
+            type="date"
+          />
+        </>
+      )}
+    </div>
+  );
+};
 
 export const MemberCreateForm: FC = () => {
   const form = useForm<CreateMember>({
@@ -36,21 +109,27 @@ export const MemberCreateForm: FC = () => {
 
   const clearHandler = (): void => form.reset();
 
-  const cpfChangeHandler: ChangeEventHandler<HTMLInputElement> = (event) => {
+  const cpfChangeHandler: InputOnChange = (event) => {
     form.setValue('cpf', applyMask.cpf(event.currentTarget.value));
   };
 
-  const housingValueChangeHandler: ChangeEventHandler<HTMLInputElement> = (
-    event
-  ) => {
+  const housingValueChangeHandler: InputOnChange = (event) => {
     form.setValue('housingValue', applyMask.money(event.currentTarget.value));
   };
 
   const submitHandler: SubmitHandler<CreateMember> = async (formData) => {
-    await create(formData);
+    try {
+      await create(formData);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const housingCondition = form.watch('housingCondition');
+
+  useEffect(() => {
+    console.log(form.formState.errors);
+  }, [form.formState.errors]);
 
   return (
     <Form.Root<CreateMember>
@@ -97,7 +176,7 @@ export const MemberCreateForm: FC = () => {
           label,
         }))}
       />
-      <CommonChurchSelect />
+      <CommonChurchSelect loading={loading} />
       <Form.Input<CreateMember>
         loading={loading}
         label="Profissão"
@@ -133,6 +212,9 @@ export const MemberCreateForm: FC = () => {
           onChange={housingValueChangeHandler}
         />
       )}
+      <Separator />
+      <MinistryInput loading={loading} />
+      <Separator />
       <div className="mt-4 flex justify-between gap-2">
         <Button
           loading={loading}

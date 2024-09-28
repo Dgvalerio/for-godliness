@@ -5,6 +5,7 @@ import { useSession } from 'next-auth/react';
 
 import { CreateMember } from '@/app/(private)/member/add/components/create-form/create-form';
 import { Member, MemberController } from '@/controllers/member/member';
+import { useMinistryController } from '@/controllers/ministry/ministry.hook';
 import { toast } from '@/lib/sonner/sonner';
 
 export namespace IUseMemberController {
@@ -23,6 +24,10 @@ export const useMemberController = (
   errorHandler?: IUseMemberController.ErrorHandler
 ): IUseMemberController.Return => {
   const { data: sessionData } = useSession();
+
+  const { loading: loadingMinistry, create: createMinistry } =
+    useMinistryController();
+
   const [loading, setLoading] = useState(false);
 
   const create: IUseMemberController.Return['create'] = useCallback(
@@ -48,16 +53,27 @@ export const useMemberController = (
         return void toast.error('Número do relatório já cadastrado!');
       }
 
-      const response = await MemberController.create({
+      const member = await MemberController.create({
         ...data,
         userId: sessionData.id,
       });
 
-      setLoading(false);
+      toast.success(`Membro adicionado com sucesso!`);
 
-      return response;
+      if (member.hasMinistry) {
+        await createMinistry(
+          {
+            ministry: data.ministry,
+            ministryPresentation: data.ministryPresentation,
+            memberId: member.id,
+          },
+          { hideToast: true }
+        );
+      }
+
+      setLoading(false);
     },
-    [errorHandler, sessionData?.id]
+    [errorHandler, sessionData?.id, createMinistry]
   );
 
   const list: IUseMemberController.Return['list'] = useCallback(async () => {
@@ -78,5 +94,5 @@ export const useMemberController = (
     return response;
   }, [sessionData]);
 
-  return { loading, create, list };
+  return { loading: loading || loadingMinistry, create, list };
 };

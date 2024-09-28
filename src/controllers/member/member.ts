@@ -3,8 +3,6 @@ import { addDoc, collection, getDocs, query, where } from '@firebase/firestore';
 import { CreateMember } from '@/app/(private)/member/add/components/create-form/create-form';
 import { db } from '@/lib/firebase/config';
 
-import { toast } from 'sonner';
-
 export interface Member extends CreateMember {
   id: string;
   userId: string;
@@ -12,7 +10,7 @@ export interface Member extends CreateMember {
 
 interface IMemberController {
   collectionPath: string;
-  create(data: Omit<Member, 'id'>): Promise<void>;
+  create(data: Omit<Member, 'id'>): Promise<Member>;
   list(userId: string): Promise<Member[]>;
   find(
     props: Partial<Pick<CreateMember, 'cpf'>>,
@@ -22,8 +20,8 @@ interface IMemberController {
 
 export const MemberController: IMemberController = {
   collectionPath: 'member',
-  async create(data: Omit<Member, 'id'>): Promise<void> {
-    await addDoc(collection(db, this.collectionPath), {
+  async create(data: Omit<Member, 'id'>): Promise<Member> {
+    const response = await addDoc(collection(db, this.collectionPath), {
       name: data.name,
       cpf: data.cpf,
       birthDate: data.birthDate,
@@ -36,7 +34,7 @@ export const MemberController: IMemberController = {
       userId: data.userId,
     });
 
-    toast.success(`Membro adicionado com sucesso!`);
+    return { id: response.id, ...data };
   },
   async list(userId: string): Promise<Member[]> {
     const q = query(

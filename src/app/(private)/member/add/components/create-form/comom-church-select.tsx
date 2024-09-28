@@ -5,7 +5,9 @@ import { CreateMember } from '@/app/(private)/member/add/components/create-form/
 import { Form } from '@/components/form/form';
 import { useChurchController } from '@/controllers/church/church.hook';
 
-export const CommonChurchSelect: FC = () => {
+export const CommonChurchSelect: FC<{ loading: boolean }> = ({
+  loading: formLoading,
+}) => {
   const { list, loading } = useChurchController();
 
   const [churchesItems, setChurchesItems] = useState<
@@ -29,7 +31,7 @@ export const CommonChurchSelect: FC = () => {
 
   return (
     <Form.Combobox<CreateMember>
-      loading={loading}
+      loading={loading || formLoading}
       label="Comum congregação"
       name="commonChurch"
       containerClassName="flex-1"
