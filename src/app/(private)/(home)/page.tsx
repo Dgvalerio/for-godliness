@@ -14,10 +14,12 @@ const Item: FC<{
   icon: IconProps['icon'];
   link: string | UrlObject;
   title: string;
-}> = ({ icon, link, title }) => (
+  testId: string;
+}> = ({ icon, link, title, testId }) => (
   <Button
     className="flex h-32 w-32 flex-col items-center gap-1 text-wrap"
     variant="outline"
+    data-test={testId}
     asChild
   >
     <Link href={link}>
@@ -38,16 +40,19 @@ const HomePage: NextPage = async () => {
           icon="add_notes"
           link={routes.addPresentationForm}
           title="Adicionar ficha de apresentação"
+          testId="add-presentation-form"
         />
         <Item
           icon="person_add"
           link={routes.addMember}
           title="Adicionar membro"
+          testId="add-member"
         />
         <Item
           icon="add_home_work"
           link={routes.addChurch}
           title="Adicionar igreja"
+          testId="add-church"
         />
       </div>
     </main>
