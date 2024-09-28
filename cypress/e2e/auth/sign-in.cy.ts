@@ -4,6 +4,24 @@ import { faker } from '@faker-js/faker';
 import { routes } from '@/utils/constants/routes';
 
 describe('Fazer login', () => {
+  const name = faker.internet.displayName();
+  const email = faker.internet.email();
+  const password = faker.internet.password();
+
+  before(() => {
+    cy.visit(routes.signUp);
+
+    cy.getBySel('name-input').type(name);
+    cy.getBySel('email-input').type(email);
+    cy.getBySel('password-input').type(password);
+    cy.getBySel('password-confirmation-input').type(password);
+
+    cy.getBySel('submit-button').click();
+
+    cy.contains('Cadastro realizado com sucesso!');
+    cy.location('pathname').should('include', routes.signIn);
+  });
+
   it('Se não autenticado, e tentar visualizar qualquer página, deve ir para o sign-in', () => {
     cy.visit('/');
 
@@ -19,7 +37,7 @@ describe('Fazer login', () => {
     cy.contains('A senha deve ter pelo menos 8 caracteres.');
   });
 
-  it('Ao preencher um e-mail inválido, e tentar submeter, deve recebe um erro', () => {
+  it('Ao preencher um e-mail inválido, e tentar submeter, deve receber um erro', () => {
     cy.visit(routes.signIn);
 
     cy.getBySel('email-input').type(faker.string.alphanumeric());
@@ -43,5 +61,18 @@ describe('Fazer login', () => {
     cy.contains(
       'Houve uma falha ao realizar o login, verifique seus dados e tente novamente.'
     );
+  });
+
+  it('Ao preencher o corretamente, deve logar o usuário e redirecionar ao dashboard', () => {
+    cy.visit(routes.signIn);
+
+    cy.getBySel('email-input').type(email);
+    cy.getBySel('password-input').type(password);
+
+    cy.getBySel('submit-button').click();
+
+    cy.contains(name);
+
+    cy.location('pathname').should('include', routes.home);
   });
 });
