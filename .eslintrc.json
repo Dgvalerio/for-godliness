@@ -2,5 +2,15 @@
   "extends": [
     "next/core-web-vitals",
     "@dgvalerio/eslint-config/next"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "**/*.cy.**"
+      ],
+      "rules": {
+        "spaced-comment": "off"
+      }
+    }
   ]
 }
