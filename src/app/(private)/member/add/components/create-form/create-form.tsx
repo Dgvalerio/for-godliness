@@ -1,5 +1,5 @@
 'use client';
-import { ChangeEventHandler, FC, useEffect } from 'react';
+import { ChangeEventHandler, FC } from 'react';
 import { SubmitHandler, useForm, useFormContext } from 'react-hook-form';
 
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -126,10 +126,6 @@ export const MemberCreateForm: FC = () => {
   };
 
   const housingCondition = form.watch('housingCondition');
-
-  useEffect(() => {
-    console.log(form.formState.errors);
-  }, [form.formState.errors]);
 
   return (
     <Form.Root<CreateMember>
