@@ -1,10 +1,16 @@
 import { withAuth } from 'next-auth/middleware';
 
+import { routes } from '@/utils/constants/routes';
+
 const auth = withAuth({
-  pages: { signIn: '/sign-in' },
+  pages: { signIn: routes.signIn },
   callbacks: {
     authorized: (props) => {
-      if (props.req.url.includes('palanqueta.jpg')) {
+      if (
+        props.req.url.includes(routes.signIn) ||
+        props.req.url.includes(routes.signUp) ||
+        props.req.url.includes('palanqueta.jpg')
+      ) {
         return true;
       }
 
