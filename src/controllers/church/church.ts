@@ -3,8 +3,6 @@ import { addDoc, collection, getDocs, query, where } from '@firebase/firestore';
 import { CreateChurch } from '@/app/(private)/church/add/components/create-form/create-form';
 import { db } from '@/lib/firebase/config';
 
-import { toast } from 'sonner';
-
 export interface Church extends CreateChurch {
   id: string;
   userId: string;
@@ -28,8 +26,6 @@ export const ChurchController: IChurchController = {
       number: data.number,
       userId: data.userId,
     });
-
-    toast.success(`Igreja adicionada com sucesso!`);
   },
   async list(userId: string): Promise<Church[]> {
     const q = query(

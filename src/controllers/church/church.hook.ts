@@ -54,6 +54,8 @@ export const useChurchController = (
         userId: sessionData.id,
       });
 
+      toast.success(`Igreja adicionada com sucesso!`);
+
       setLoading(false);
 
       return response;
