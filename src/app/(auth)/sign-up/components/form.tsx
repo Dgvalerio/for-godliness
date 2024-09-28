@@ -2,12 +2,16 @@
 import { FC, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
+import Link from 'next/link';
+
 import { FirebaseError } from '@firebase/util';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Form } from '@/components/form/form';
 import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
 import { toast } from '@/lib/sonner/sonner';
+import { routes } from '@/utils/constants/routes';
 
 import { z } from 'zod';
 
@@ -105,6 +109,15 @@ export const SignUpForm: FC<SignUpFormProps> = ({ onSuccess }) => {
       />
       <Button type="submit" loading={loading} data-test="submit-button">
         Cadastrar
+      </Button>
+      <Separator />
+      <Button
+        variant="outline"
+        loading={loading}
+        data-test="back-button"
+        asChild
+      >
+        <Link href={routes.signIn}>Voltar</Link>
       </Button>
     </Form.Root>
   );

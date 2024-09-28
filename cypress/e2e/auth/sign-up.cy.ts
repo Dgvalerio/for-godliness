@@ -4,6 +4,14 @@ import { faker } from '@faker-js/faker';
 import { routes } from '@/utils/constants/routes';
 
 describe('Cadastrar usuário', () => {
+  it('Ao clicar no botão de voltar, deve ir para o sign-in', () => {
+    cy.visit(routes.signUp);
+
+    cy.getBySel('back-button').click();
+
+    cy.location('pathname').should('include', routes.signIn);
+  });
+
   it('Se não preencher os campos, e tentar submeter, deve receber erros', () => {
     cy.visit(routes.signUp);
 
