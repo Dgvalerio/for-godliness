@@ -1,35 +1,16 @@
 /// <reference types="cypress" />
 
-Cypress.Commands.add(
-  'getBySel',
-  (selector, ...args) =>
-    cy.get(
-      `[data-test=${selector}]`,
-      ...args
-    ) as unknown as void | Cypress.Chainable<unknown>
-);
-
-Cypress.Commands.add(
-  'getBySelLike',
-  (selector, ...args) =>
-    cy.get(
-      `[data-test*=${selector}]`,
-      ...args
-    ) as unknown as void | Cypress.Chainable<unknown>
+Cypress.Commands.add('getBySel', (selector, options) =>
+  cy.get(`[data-test=${selector}]`, options)
 );
 
 declare global {
   namespace Cypress {
     interface Chainable {
-      getBySel<S = string>(
-        alias: string,
+      getBySel(
+        selector: string,
         options?: Partial<Loggable & Timeoutable & Withinable & Shadow>
-      ): Chainable<S>;
-
-      getBySelLike<S = string>(
-        alias: string,
-        options?: Partial<Loggable & Timeoutable & Withinable & Shadow>
-      ): Chainable<S>;
+      ): Chainable<JQuery<HTMLElement>>;
     }
   }
 }

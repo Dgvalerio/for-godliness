@@ -86,7 +86,9 @@ export const memberPersonalSchema = z
       required_error: 'O estado civil deve ser informado.',
     }),
     occupation: z.string().min(1, 'A profissão deve ser informada.'),
-    commonChurch: z.string().min(1, 'A comum congregação deve ser informada.'),
+    commonChurch: z.string({
+      required_error: 'A comum congregação deve ser informada.',
+    }),
     housingCondition: z.nativeEnum(HousingConditionValues, {
       required_error: 'A condição de moradia deve ser informada.',
     }),
@@ -121,6 +123,21 @@ export const memberPersonalSchema = z
     }
   )
   .refine(
+    (data) => {
+      const now = new Date().toISOString();
+      const time = now.split('T')[1];
+
+      return (
+        compareAsc(`${data.birthDate}T${time}`, `${data.baptismDate}T${time}`) <
+        1
+      );
+    },
+    {
+      message: 'A data de batismo não deve ser menor que a de nascimento.',
+      path: ['baptismDate'],
+    }
+  )
+  .refine(
     (data) =>
       data.housingCondition !== HousingConditionValues.rent ||
       (data.housingValue !== undefined &&
@@ -138,7 +155,7 @@ export const memberPersonalSchema = z
         data.housingValue &&
         Number(data.housingValue.replaceAll(/\D/g, '')) > 0),
     {
-      message: 'O valor do financiamento deve ser informado.',
+      message: 'O valor da parcela do financiamento deve ser informado.',
       path: ['housingValue'],
     }
   );

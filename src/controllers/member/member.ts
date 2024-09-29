@@ -1,6 +1,7 @@
 import { addDoc, collection, getDocs, query, where } from '@firebase/firestore';
 
 import { CreateMember } from '@/app/(private)/member/add/components/create-form/create-form';
+import { HousingConditionValues } from '@/app/(private)/member/add/components/create-form/schemas/member.schema';
 import { db } from '@/lib/firebase/config';
 
 export interface Member extends CreateMember {
@@ -21,7 +22,7 @@ interface IMemberController {
 export const MemberController: IMemberController = {
   collectionPath: 'member',
   async create(data: Omit<Member, 'id'>): Promise<Member> {
-    const response = await addDoc(collection(db, this.collectionPath), {
+    let document: Omit<Member, 'id'> = {
       name: data.name,
       cpf: data.cpf,
       birthDate: data.birthDate,
@@ -30,9 +31,20 @@ export const MemberController: IMemberController = {
       occupation: data.occupation,
       commonChurch: data.commonChurch,
       housingCondition: data.housingCondition,
-      housingValue: data.housingValue,
       userId: data.userId,
-    });
+    };
+
+    if (
+      data.housingCondition === HousingConditionValues.rent ||
+      data.housingCondition === HousingConditionValues.financed
+    ) {
+      document = { ...document, housingValue: data.housingValue };
+    }
+
+    const response = await addDoc(
+      collection(db, this.collectionPath),
+      document
+    );
 
     return { id: response.id, ...data };
   },

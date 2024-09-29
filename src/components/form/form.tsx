@@ -77,7 +77,7 @@ export namespace FormProps {
 
   export type Description = ComponentProps<'p'>;
 
-  export type Error = ComponentProps<'p'>;
+  export type Error = ComponentProps<'p'> & { testId: string };
 
   export type Wrapper<TFieldValues extends FieldValues> =
     ComumFieldProps<TFieldValues> & PropsWithChildren & { error?: string };
@@ -131,12 +131,13 @@ const FormDescription: FC<FormProps.Description> = ({
     </p>
   );
 
-const FormError: FC<FormProps.Error> = ({ children, className }) => (
+const FormError: FC<FormProps.Error> = ({ children, className, testId }) => (
   <p
     className={cn(
       'text-sm font-medium text-red-500 dark:text-red-900',
       className
     )}
+    data-test={testId}
   >
     {children}
   </p>
@@ -164,7 +165,7 @@ const Wrapper = <TFieldValues extends FieldValues>({
         {description}
       </FormDescription>
     )}
-    {error && <FormError>{error}</FormError>}
+    {error && <FormError testId={`${name}-input-error`}>{error}</FormError>}
   </div>
 );
 
@@ -296,6 +297,7 @@ export const FormCombobox = <TFieldValues extends FieldValues>({
                   'justify-between',
                   !field.value && 'text-muted-foreground'
                 )}
+                data-test={`${name}-combobox-trigger`}
               >
                 {field.value
                   ? items.find((item) => item.value === field.value)?.label
@@ -316,7 +318,7 @@ export const FormCombobox = <TFieldValues extends FieldValues>({
                 />
                 <CommandList>
                   <CommandEmpty>Sem itens</CommandEmpty>
-                  <CommandGroup>
+                  <CommandGroup data-test={`${name}-combobox-group`}>
                     {items.map((item) => (
                       <CommandItem
                         value={item.label}

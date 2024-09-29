@@ -34,7 +34,7 @@ export type CreateMember = z.infer<typeof memberSchema>;
 
 export type InputOnChange = ChangeEventHandler<HTMLInputElement>;
 
-const MinistryInput: FC<{ loading: boolean }> = ({ loading }) => {
+const MinistryFields: FC<{ loading: boolean }> = ({ loading }) => {
   const { watch, control, setValue } = useFormContext<CreateMember>();
 
   const handleCheckedChange = (
@@ -63,6 +63,7 @@ const MinistryInput: FC<{ loading: boolean }> = ({ loading }) => {
             </div>
             <FormControl>
               <Switch
+                data-test="hasMinistry-check"
                 checked={field.value}
                 onCheckedChange={handleCheckedChange.bind(null, field.onChange)}
               />
@@ -118,11 +119,7 @@ export const MemberCreateForm: FC = () => {
   };
 
   const submitHandler: SubmitHandler<CreateMember> = async (formData) => {
-    try {
-      await create(formData);
-    } catch (e) {
-      console.log(e);
-    }
+    await create(formData);
   };
 
   const housingCondition = form.watch('housingCondition');
@@ -209,18 +206,24 @@ export const MemberCreateForm: FC = () => {
         />
       )}
       <Separator />
-      <MinistryInput loading={loading} />
+      <MinistryFields loading={loading} />
       <Separator />
       <div className="mt-4 flex justify-between gap-2">
         <Button
           loading={loading}
           className="w-[25%]"
           variant="outline"
+          data-test="clear-button"
           onClick={clearHandler}
         >
           Limpar
         </Button>
-        <Button loading={loading} className="w-[25%]" type="submit">
+        <Button
+          loading={loading}
+          className="w-[25%]"
+          type="submit"
+          data-test="submit-button"
+        >
           Criar
         </Button>
       </div>
