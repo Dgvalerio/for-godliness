@@ -62,7 +62,12 @@ export const ChurchCreateForm: FC = () => {
         >
           Limpar
         </Button>
-        <Button loading={loading} className="w-[25%]" type="submit">
+        <Button
+          loading={loading}
+          className="w-[25%]"
+          type="submit"
+          data-test="submit-button"
+        >
           Criar
         </Button>
       </div>

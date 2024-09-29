@@ -9,7 +9,8 @@
         "cypress/**/*.**"
       ],
       "rules": {
-        "spaced-comment": "off"
+        "spaced-comment": "off",
+        "no-restricted-imports": "off"
       }
     }
   ]

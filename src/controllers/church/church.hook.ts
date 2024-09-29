@@ -43,10 +43,11 @@ export const useChurchController = (
       if (churches.length > 0) {
         setLoading(false);
 
-        errorHandler &&
-          errorHandler({ number: 'Número do relatório já cadastrado!' });
+        const message = 'Número do relatório já cadastrado!';
 
-        return void toast.error('Número do relatório já cadastrado!');
+        errorHandler && errorHandler({ number: message });
+
+        return void toast.error(message);
       }
 
       const response = await ChurchController.create({

@@ -1,36 +1,18 @@
 /// <reference types="cypress" />
-import { faker } from '@faker-js/faker';
-
 import { routes } from '@/utils/constants/routes';
 
+import { testerEmail, testerName, testerPassword } from '../../support/e2e';
+
 describe('Dashboard', () => {
-  const name = faker.internet.displayName();
-  const email = faker.internet.email();
-  const password = faker.internet.password();
-
-  before(() => {
-    cy.visit(routes.signUp);
-
-    cy.getBySel('name-input').type(name);
-    cy.getBySel('email-input').type(email);
-    cy.getBySel('password-input').type(password);
-    cy.getBySel('password-confirmation-input').type(password);
-
-    cy.getBySel('submit-button').click();
-
-    cy.contains('Cadastro realizado com sucesso!');
-    cy.location('pathname').should('include', routes.signIn);
-  });
-
   beforeEach(() => {
     cy.visit(routes.signIn);
 
-    cy.getBySel('email-input').type(email);
-    cy.getBySel('password-input').type(password);
+    cy.getBySel('email-input').type(testerEmail);
+    cy.getBySel('password-input').type(testerPassword);
 
     cy.getBySel('submit-button').click();
 
-    cy.contains(name);
+    cy.contains(testerName);
 
     cy.location('pathname').should('include', routes.home);
   });

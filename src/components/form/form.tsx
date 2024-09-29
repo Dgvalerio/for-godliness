@@ -57,6 +57,7 @@ export namespace FormProps {
     description?: string;
     descriptionClassName?: ComponentProps<'p'>['className'];
     containerClassName?: ComponentProps<'div'>['className'];
+    testId?: string;
   }
 
   export type Input<TFieldValues extends FieldValues> =
@@ -196,6 +197,7 @@ const FormInput = <TFieldValues extends FieldValues>({
     >
       <Input
         aria-invalid={!!error}
+        data-test={props.testId || `${name}-input`}
         {...props}
         {...register(name, { onChange })}
       />

@@ -14,7 +14,12 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
+// eslint-disable-next-line no-restricted-imports
 import './commands';
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+
+export const testerName = 'O Testador';
+export const testerEmail = 'tester@test.com';
+export const testerPassword = 'test_test_test';
