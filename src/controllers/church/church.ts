@@ -1,9 +1,7 @@
 import { addDoc, collection, getDocs, query, where } from '@firebase/firestore';
 
-import { CreateChurch } from '@/app/(private)/add-church/components/create-form/create-form';
+import { CreateChurch } from '@/app/(private)/church/add/components/create-form/create-form';
 import { db } from '@/lib/firebase/config';
-
-import { toast } from 'sonner';
 
 export interface Church extends CreateChurch {
   id: string;
@@ -28,8 +26,6 @@ export const ChurchController: IChurchController = {
       number: data.number,
       userId: data.userId,
     });
-
-    toast.success(`Igreja adicionada com sucesso!`);
   },
   async list(userId: string): Promise<Church[]> {
     const q = query(
@@ -37,18 +33,18 @@ export const ChurchController: IChurchController = {
       where('userId', '==', userId)
     );
 
-    const dataSheets: Church[] = [];
+    const churches: Church[] = [];
 
     const querySnapshot = await getDocs(q);
 
     querySnapshot.forEach((doc) => {
-      dataSheets.push({
+      churches.push({
         id: doc.id,
         ...(doc.data() as Omit<Church, 'id'>),
       });
     });
 
-    return dataSheets;
+    return churches;
   },
   async find(props, userId: string): Promise<Church[]> {
     const constraints = [where('userId', '==', userId)];
@@ -57,17 +53,17 @@ export const ChurchController: IChurchController = {
 
     const q = query(collection(db, this.collectionPath), ...constraints);
 
-    const dataSheets: Church[] = [];
+    const churches: Church[] = [];
 
     const querySnapshot = await getDocs(q);
 
     querySnapshot.forEach((doc) => {
-      dataSheets.push({
+      churches.push({
         id: doc.id,
         ...(doc.data() as Omit<Church, 'id'>),
       });
     });
 
-    return dataSheets;
+    return churches;
   },
 };

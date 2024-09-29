@@ -1,3 +1,5 @@
+import { memberMinistrySchema } from '@/app/(private)/member/add/components/create-form/schemas/ministry.schema';
+
 import { compareAsc } from 'date-fns';
 import { z } from 'zod';
 
@@ -74,7 +76,7 @@ export const HousingCondition: Record<HousingConditionValues, string> = {
   loaned: 'Casa cedida',
 };
 
-export const recordSchema = z
+export const memberPersonalSchema = z
   .object({
     name: z.string().min(1, 'O nome deve ser informado.'),
     cpf: z.string().min(1, 'O cpf deve ser informado.'),
@@ -84,7 +86,9 @@ export const recordSchema = z
       required_error: 'O estado civil deve ser informado.',
     }),
     occupation: z.string().min(1, 'A profissão deve ser informada.'),
-    commonChurch: z.string().min(1, 'A comum congregação deve ser informada.'),
+    commonChurch: z.string({
+      required_error: 'A comum congregação deve ser informada.',
+    }),
     housingCondition: z.nativeEnum(HousingConditionValues, {
       required_error: 'A condição de moradia deve ser informada.',
     }),
@@ -97,7 +101,6 @@ export const recordSchema = z
   .refine(
     (data) => {
       const now = new Date().toISOString();
-
       const time = now.split('T')[1];
 
       return compareAsc(`${data.birthDate}T${time}`, now) < 1;
@@ -110,13 +113,27 @@ export const recordSchema = z
   .refine(
     (data) => {
       const now = new Date().toISOString();
-
       const time = now.split('T')[1];
 
       return compareAsc(`${data.baptismDate}T${time}`, now) < 1;
     },
     {
       message: 'A data não deve ser maior que a atual.',
+      path: ['baptismDate'],
+    }
+  )
+  .refine(
+    (data) => {
+      const now = new Date().toISOString();
+      const time = now.split('T')[1];
+
+      return (
+        compareAsc(`${data.birthDate}T${time}`, `${data.baptismDate}T${time}`) <
+        1
+      );
+    },
+    {
+      message: 'A data de batismo não deve ser menor que a de nascimento.',
       path: ['baptismDate'],
     }
   )
@@ -138,7 +155,29 @@ export const recordSchema = z
         data.housingValue &&
         Number(data.housingValue.replaceAll(/\D/g, '')) > 0),
     {
-      message: 'O valor do financiamento deve ser informado.',
+      message: 'O valor da parcela do financiamento deve ser informado.',
       path: ['housingValue'],
+    }
+  );
+
+export const memberSchema = memberPersonalSchema
+  .and(memberMinistrySchema)
+  .refine(
+    (data) => {
+      if (!data.hasMinistry || !data.ministryPresentation) return true;
+
+      const now = new Date().toISOString();
+      const time = now.split('T')[1];
+
+      return (
+        compareAsc(
+          `${data.baptismDate}T${time}`,
+          `${data.ministryPresentation}T${time}`
+        ) < 1
+      );
+    },
+    {
+      message: 'A data não deve ser menor que a data de batismo.',
+      path: ['ministryPresentation'],
     }
   );

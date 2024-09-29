@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "cy:open": "cypress open",
+    "cy:e2e": "cypress open --e2e --browser electron"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
@@ -19,6 +21,7 @@
     "@radix-ui/react-radio-group": "^1.2.0",
     "@radix-ui/react-separator": "^1.0.3",
     "@radix-ui/react-slot": "^1.1.0",
+    "@radix-ui/react-switch": "^1.1.0",
     "@radix-ui/react-toast": "^1.1.5",
     "@radix-ui/react-tooltip": "^1.1.2",
     "@t3-oss/env-nextjs": "^0.10.1",
@@ -46,9 +49,11 @@
   },
   "devDependencies": {
     "@dgvalerio/eslint-config": "^1.5.9",
+    "@faker-js/faker": "^9.0.3",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "cypress": "^13.15.0",
     "eslint": "^8",
     "eslint-config-next": "14.2.3",
     "postcss": "^8",

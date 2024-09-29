@@ -4,7 +4,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { churchSchema } from '@/app/(private)/add-church/components/create-form/schema';
+import { churchSchema } from '@/app/(private)/church/add/components/create-form/schema';
 import { Form } from '@/components/form/form';
 import { Button } from '@/components/ui/button';
 import {
@@ -41,12 +41,14 @@ export const ChurchCreateForm: FC = () => {
       <Form.Input<CreateChurch>
         loading={loading}
         label="Nome"
+        placeholder="Exemplo: Sítio Palanqueta I"
         name="name"
         containerClassName="flex-1"
       />
       <Form.Input<CreateChurch>
         loading={loading}
         label="Número do relatório"
+        placeholder="Exemplo: 123"
         name="number"
         containerClassName="flex-1"
         type="number"
@@ -60,7 +62,12 @@ export const ChurchCreateForm: FC = () => {
         >
           Limpar
         </Button>
-        <Button loading={loading} className="w-[25%]" type="submit">
+        <Button
+          loading={loading}
+          className="w-[25%]"
+          type="submit"
+          data-test="submit-button"
+        >
           Criar
         </Button>
       </div>

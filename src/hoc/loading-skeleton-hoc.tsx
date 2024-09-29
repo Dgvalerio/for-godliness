@@ -29,7 +29,11 @@ export const withLoadingSkeletonAndRef = <
   Component: ForwardRefExoticComponent<Props & RefAttributes<Refs>>
 ): ForwardRefExoticComponent<PropsWithoutRef<Props> & RefAttributes<Refs>> => {
   const Handler = forwardRef<Refs, Props>((props, ref) =>
-    props.loading ? <Skeleton {...props} /> : <Component {...props} ref={ref} />
+    props.loading ? (
+      <Skeleton {...(props as Props)} />
+    ) : (
+      <Component {...(props as Props)} ref={ref} />
+    )
   );
 
   const displayName = Component.displayName || Component.name || 'Component';

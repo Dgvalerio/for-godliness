@@ -3,18 +3,19 @@ import { useCallback, useState } from 'react';
 
 import { useSession } from 'next-auth/react';
 
-import { CreateRecordSheet } from '@/app/(private)/add-record/components/create-form/create-form';
+import { CreateMember } from '@/app/(private)/member/add/components/create-form/create-form';
 import { Member, MemberController } from '@/controllers/member/member';
+import { useMinistryController } from '@/controllers/ministry/ministry.hook';
 import { toast } from '@/lib/sonner/sonner';
 
 export namespace IUseMemberController {
   export type ErrorHandler = (
-    props: Partial<Record<keyof CreateRecordSheet, string>>
+    props: Partial<Record<keyof CreateMember, string>>
   ) => void;
 
   export interface Return {
     loading: boolean;
-    create(data: CreateRecordSheet): Promise<void>;
+    create(data: CreateMember): Promise<void>;
     list(): Promise<Member[]>;
   }
 }
@@ -23,10 +24,14 @@ export const useMemberController = (
   errorHandler?: IUseMemberController.ErrorHandler
 ): IUseMemberController.Return => {
   const { data: sessionData } = useSession();
+
+  const { loading: loadingMinistry, create: createMinistry } =
+    useMinistryController();
+
   const [loading, setLoading] = useState(false);
 
   const create: IUseMemberController.Return['create'] = useCallback(
-    async (data: CreateRecordSheet) => {
+    async (data: CreateMember) => {
       setLoading(true);
 
       if (!sessionData?.id) {
@@ -43,22 +48,32 @@ export const useMemberController = (
       if (members.length > 0) {
         setLoading(false);
 
-        errorHandler &&
-          errorHandler({ cpf: 'Número do relatório já cadastrado!' });
+        errorHandler && errorHandler({ cpf: 'Número de CPF já cadastrado!' });
 
         return void toast.error('Número do relatório já cadastrado!');
       }
 
-      const response = await MemberController.create({
+      const member = await MemberController.create({
         ...data,
         userId: sessionData.id,
       });
 
-      setLoading(false);
+      toast.success(`Membro adicionado com sucesso!`);
 
-      return response;
+      if (member.hasMinistry) {
+        await createMinistry(
+          {
+            ministry: data.ministry,
+            ministryPresentation: data.ministryPresentation,
+            memberId: member.id,
+          },
+          { hideToast: true }
+        );
+      }
+
+      setLoading(false);
     },
-    [errorHandler, sessionData?.id]
+    [errorHandler, sessionData?.id, createMinistry]
   );
 
   const list: IUseMemberController.Return['list'] = useCallback(async () => {
@@ -79,5 +94,5 @@ export const useMemberController = (
     return response;
   }, [sessionData]);
 
-  return { loading, create, list };
+  return { loading: loading || loadingMinistry, create, list };
 };

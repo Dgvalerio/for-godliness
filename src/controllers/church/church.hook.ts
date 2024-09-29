@@ -3,7 +3,7 @@ import { useCallback, useState } from 'react';
 
 import { useSession } from 'next-auth/react';
 
-import { CreateChurch } from '@/app/(private)/add-church/components/create-form/create-form';
+import { CreateChurch } from '@/app/(private)/church/add/components/create-form/create-form';
 import { Church, ChurchController } from '@/controllers/church/church';
 import { toast } from '@/lib/sonner/sonner';
 
@@ -43,16 +43,19 @@ export const useChurchController = (
       if (churches.length > 0) {
         setLoading(false);
 
-        errorHandler &&
-          errorHandler({ number: 'Número do relatório já cadastrado!' });
+        const message = 'Número do relatório já cadastrado!';
 
-        return void toast.error('Número do relatório já cadastrado!');
+        errorHandler && errorHandler({ number: message });
+
+        return void toast.error(message);
       }
 
       const response = await ChurchController.create({
         ...data,
         userId: sessionData.id,
       });
+
+      toast.success(`Igreja adicionada com sucesso!`);
 
       setLoading(false);
 

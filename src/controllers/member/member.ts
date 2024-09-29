@@ -1,29 +1,28 @@
 import { addDoc, collection, getDocs, query, where } from '@firebase/firestore';
 
-import { CreateRecordSheet } from '@/app/(private)/add-record/components/create-form/create-form';
+import { CreateMember } from '@/app/(private)/member/add/components/create-form/create-form';
+import { HousingConditionValues } from '@/app/(private)/member/add/components/create-form/schemas/member.schema';
 import { db } from '@/lib/firebase/config';
 
-import { toast } from 'sonner';
-
-export interface Member extends CreateRecordSheet {
+export interface Member extends CreateMember {
   id: string;
   userId: string;
 }
 
 interface IMemberController {
   collectionPath: string;
-  create(data: Omit<Member, 'id'>): Promise<void>;
+  create(data: Omit<Member, 'id'>): Promise<Member>;
   list(userId: string): Promise<Member[]>;
   find(
-    props: Partial<Pick<CreateRecordSheet, 'cpf'>>,
+    props: Partial<Pick<CreateMember, 'cpf'>>,
     userId: string
   ): Promise<Member[]>;
 }
 
 export const MemberController: IMemberController = {
   collectionPath: 'member',
-  async create(data: Omit<Member, 'id'>): Promise<void> {
-    await addDoc(collection(db, this.collectionPath), {
+  async create(data: Omit<Member, 'id'>): Promise<Member> {
+    let document: Omit<Member, 'id'> = {
       name: data.name,
       cpf: data.cpf,
       birthDate: data.birthDate,
@@ -32,11 +31,22 @@ export const MemberController: IMemberController = {
       occupation: data.occupation,
       commonChurch: data.commonChurch,
       housingCondition: data.housingCondition,
-      housingValue: data.housingValue,
       userId: data.userId,
-    });
+    };
 
-    toast.success(`Membro adicionado com sucesso!`);
+    if (
+      data.housingCondition === HousingConditionValues.rent ||
+      data.housingCondition === HousingConditionValues.financed
+    ) {
+      document = { ...document, housingValue: data.housingValue };
+    }
+
+    const response = await addDoc(
+      collection(db, this.collectionPath),
+      document
+    );
+
+    return { id: response.id, ...data };
   },
   async list(userId: string): Promise<Member[]> {
     const q = query(
@@ -44,18 +54,18 @@ export const MemberController: IMemberController = {
       where('userId', '==', userId)
     );
 
-    const dataSheets: Member[] = [];
+    const members: Member[] = [];
 
     const querySnapshot = await getDocs(q);
 
     querySnapshot.forEach((doc) => {
-      dataSheets.push({
+      members.push({
         id: doc.id,
         ...(doc.data() as Omit<Member, 'id'>),
       });
     });
 
-    return dataSheets;
+    return members;
   },
   async find(props, userId: string): Promise<Member[]> {
     const constraints = [where('userId', '==', userId)];
@@ -64,14 +74,14 @@ export const MemberController: IMemberController = {
 
     const q = query(collection(db, this.collectionPath), ...constraints);
 
-    const dataSheets: Member[] = [];
+    const members: Member[] = [];
 
     const querySnapshot = await getDocs(q);
 
     querySnapshot.forEach((doc) => {
-      dataSheets.push({ id: doc.id, ...(doc.data() as Omit<Member, 'id'>) });
+      members.push({ id: doc.id, ...(doc.data() as Omit<Member, 'id'>) });
     });
 
-    return dataSheets;
+    return members;
   },
 };

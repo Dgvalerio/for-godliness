@@ -1,5 +1,5 @@
 'use client';
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -9,37 +9,28 @@ import { Button } from '@/components/ui/button';
 
 import { z } from 'zod';
 
-const passwordCheckSchema = z.object({
+const signInSchema = z.object({
   email: z
     .string()
-    .email('E-mail inválido')
-    .min(1, 'O e-mail deve ser informado.'),
+    .min(1, 'O e-mail deve ser informado.')
+    .email('E-mail inválido.'),
   password: z.string().min(8, 'A senha deve ter pelo menos 8 caracteres.'),
 });
 
-type PasswordCheckData = z.infer<typeof passwordCheckSchema>;
+type PasswordCheckData = z.infer<typeof signInSchema>;
 
-export interface PasswordCheckProps {
-  email: string;
+export interface SignInFormProps {
   loading?: boolean;
   onSuccess(data: PasswordCheckData): Promise<void>;
 }
 
-export const PasswordCheck: FC<PasswordCheckProps> = ({
-  email,
-  loading,
-  onSuccess,
-}) => {
+export const SignInForm: FC<SignInFormProps> = ({ loading, onSuccess }) => {
   const form = useForm<PasswordCheckData>({
-    resolver: zodResolver(passwordCheckSchema),
+    resolver: zodResolver(signInSchema),
   });
 
   const submitHandler: SubmitHandler<PasswordCheckData> = async (data) =>
     onSuccess(data);
-
-  useEffect(() => {
-    form.setValue('email', email);
-  }, [email, form]);
 
   return (
     <Form.Root<PasswordCheckData>
@@ -53,14 +44,16 @@ export const PasswordCheck: FC<PasswordCheckProps> = ({
         name="email"
         containerClassName="flex-1"
         type="email"
+        data-test="email-input"
       />
       <Form.Input<PasswordCheckData>
         placeholder="********"
         name="password"
         containerClassName="flex-1"
         type="password"
+        data-test="password-input"
       />
-      <Button type="submit" loading={loading}>
+      <Button type="submit" loading={loading} data-test="submit-button">
         Entrar
       </Button>
     </Form.Root>

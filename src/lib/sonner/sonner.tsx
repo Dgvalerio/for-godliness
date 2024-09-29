@@ -17,11 +17,18 @@ export const SonnerToaster: typeof Toaster = ({
 );
 
 interface Toast {
+  success: typeof t.success;
   error: typeof t.error;
   warning: typeof t.warning;
 }
 
 export const toast: Toast = {
+  success: (message, data) =>
+    t.success(message, {
+      ...data,
+      className: cn('gap-3', data?.className),
+      icon: data?.icon || <Icon icon="check_circle" />,
+    }),
   error: (message, data) =>
     t.error(message, {
       ...data,

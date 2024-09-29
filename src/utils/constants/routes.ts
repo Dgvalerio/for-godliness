@@ -1,13 +1,17 @@
 interface Routes {
   home: string;
   signIn: string;
-  addRecord: string;
+  signUp: string;
+  addMember: string;
   addChurch: string;
+  addPresentationForm: string;
 }
 
 export const routes: Routes = {
   home: '/',
   signIn: '/sign-in',
-  addRecord: '/sign-in',
-  addChurch: '/sign-in',
+  signUp: '/sign-up',
+  addMember: '/member/add',
+  addChurch: '/church/add',
+  addPresentationForm: '/presentation-form/add',
 };

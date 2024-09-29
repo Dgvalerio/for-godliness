@@ -5,6 +5,7 @@ import Link from 'next/link';
 
 import { Icon, IconProps } from '@/components/icon/icon';
 import { Button } from '@/components/ui/button';
+import { routes } from '@/utils/constants/routes';
 import { awaiter } from '@/utils/functions/awaiter';
 
 import type { UrlObject } from 'url';
@@ -13,10 +14,12 @@ const Item: FC<{
   icon: IconProps['icon'];
   link: string | UrlObject;
   title: string;
-}> = ({ icon, link, title }) => (
+  testId: string;
+}> = ({ icon, link, title, testId }) => (
   <Button
     className="flex h-32 w-32 flex-col items-center gap-1 text-wrap"
     variant="outline"
+    data-test={testId}
     asChild
   >
     <Link href={link}>
@@ -33,11 +36,23 @@ const HomePage: NextPage = async () => {
     <main className="flex flex-col gap-4">
       <h1 className="text-lg font-semibold">Bem vindo ao sistema!</h1>
       <div className="flex flex-wrap gap-4">
-        <Item icon="person_add" link="/add-record" title="Adicionar registro" />
+        <Item
+          icon="add_notes"
+          link={routes.addPresentationForm}
+          title="Adicionar ficha de apresentação"
+          testId="add-presentation-form"
+        />
+        <Item
+          icon="person_add"
+          link={routes.addMember}
+          title="Adicionar membro"
+          testId="add-member"
+        />
         <Item
           icon="add_home_work"
-          link="/add-church"
+          link={routes.addChurch}
           title="Adicionar igreja"
+          testId="add-church"
         />
       </div>
     </main>

@@ -2,5 +2,16 @@
   "extends": [
     "next/core-web-vitals",
     "@dgvalerio/eslint-config/next"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "cypress/**/*.**"
+      ],
+      "rules": {
+        "spaced-comment": "off",
+        "no-restricted-imports": "off"
+      }
+    }
   ]
 }
